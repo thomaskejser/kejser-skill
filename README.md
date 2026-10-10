@@ -8,13 +8,14 @@ The two clients install this differently — `/plugin` is a CLI command and does
 
 ### Cowork (desktop app)
 
-Customize → Plugins → Add → Add marketplace → `thomaskejser/kejser-skill`, then install `kejser-web` from the marketplace listing. A restart may be needed before the skills register.
+Customize → Plugins → Add → Add marketplace → `thomaskejser/kejser-skill`, then install `kejser-web` and `kejser-code` from the marketplace listing. A restart may be needed before the skills register.
 
 ### Claude Code (CLI)
 
 ```
 /plugin marketplace add thomaskejser/kejser-skill
 /plugin install kejser-web@kejser-skill
+/plugin install kejser-code@kejser-skill
 ```
 
 Pin to a tag or branch for reproducible behaviour across machines:
@@ -33,11 +34,27 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 
 | Skill | Covers |
 |---|---|
+| `web-stack` | Default stack for new web work: SvelteKit on Node, scaffolding commands, tooling, DuckDB, integration/secret handling, Firefox extensions via WXT. |
 | `sveltekit` | Svelte 5 + SvelteKit conventions. Central rule: **every UX control is a component** — pages and layouts are composition only. |
 | `css` | **No Tailwind, no utility classes.** Semantic element selectors, meaning-based class names, design tokens, and six global stylesheets (`tokens`, `reset`, `text`, `table`, `form`, `navigation`). |
 | `deploying` | *Placeholder.* adapter-node build pipeline is settled; server specifics are marked TBD and must be filled in before use. |
 
-Once installed, skills are referenced as `/kejser-web:sveltekit`, `/kejser-web:css`, `/kejser-web:deploying`.
+### `kejser-code`
+
+| Skill | Covers |
+|---|---|
+| `code-style` | Any language. Comments default to none (contract only, rationale in `docs/`), guard clauses, fail loudly, no silently-ignored input, testing and verification. |
+| `cpp` | Modern C++: smart pointers, `optional`/`expected`, RAII, `const` everywhere, free functions, no `using namespace`, braces always, CLI11, vcpkg manifest mode, Makefile over raw CMake. |
+| `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax; SQL kept in `.sql` files. |
+| `collaboration` | Explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
+
+Once installed, skills are referenced as `/<plugin>:<skill>`, e.g. `/kejser-web:css`, `/kejser-code:cpp`.
+
+## What stays out of this repo
+
+- **Repo-specific workflows** (dbprove `/prove` `/publish`, iceberg-bench `/bench`, sql-arena `refresh-data`) stay in their own repos — they hardcode that checkout's paths.
+- **FLOE brand** stays in the `floe-brand` package: it is unlicensed company material with licensed fonts, and this repo is public.
+- **Repo facts** (build commands, architecture) stay in each repo's `CLAUDE.md`/`AGENTS.md`. A repo's own file wins where it is stricter than these skills.
 
 ## Layout
 
@@ -46,12 +63,11 @@ Once installed, skills are referenced as `/kejser-web:sveltekit`, `/kejser-web:c
   marketplace.json          # marketplace manifest — lists plugins
 plugins/
   kejser-web/
-    .claude-plugin/
-      plugin.json           # plugin manifest
-    skills/
-      sveltekit/SKILL.md
-      css/SKILL.md
-      deploying/SKILL.md
+    .claude-plugin/plugin.json
+    skills/{web-stack,sveltekit,css,deploying}/SKILL.md
+  kejser-code/
+    .claude-plugin/plugin.json
+    skills/{code-style,cpp,sql-design,collaboration}/SKILL.md
 ```
 
 ## Adding a skill

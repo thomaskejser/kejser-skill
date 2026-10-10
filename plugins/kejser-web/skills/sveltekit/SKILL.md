@@ -54,7 +54,8 @@ Why: one place to fix accessibility, one place to change behaviour, and the glob
 
 ## Component rules
 
-- One component per file, PascalCase filename matching the component's purpose (`SubmitButton.svelte`, not `btn2.svelte`).
+- One component per file, PascalCase filename matching the component's purpose (`SubmitButton.svelte`, not `btn2.svelte`). Route directories are kebab-case; TypeScript modules and identifiers are camelCase.
+- Emit the semantic element for the job and no more — no wrapper `<div>` unless layout needs it.
 - Components live in `src/lib/components/`, grouped into subfolders by domain once a folder exceeds ~10 files.
 - Props are typed with `$props()` and an inline type annotation. No `export let` — this is Svelte 5.
 - Components accept content via snippets (`children`, named snippets) rather than hardcoding text.
@@ -85,6 +86,14 @@ Use runes everywhere; do not mix in Svelte 4 idioms.
 - All scripts are `<script lang="ts">`.
 - Use generated `./$types` for `PageData`, `PageServerLoad`, `Actions`, `LayoutData`.
 - No `any`. If a type is genuinely unknown, use `unknown` and narrow.
+
+## SQL
+
+SQL lives in standalone `.sql` files (e.g. `src/lib/server/sql/`), imported with Vite's `?raw` suffix — never as template strings inlined in TypeScript. Change a query by editing its `.sql` file.
+
+```ts
+import topEngines from '$lib/server/sql/top-engines.sql?raw';
+```
 
 ## Project layout
 

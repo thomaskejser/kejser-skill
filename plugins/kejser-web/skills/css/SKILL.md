@@ -21,14 +21,16 @@ Style meaning, not appearance.
 
 - Target semantic HTML elements directly wherever possible: `table`, `th`, `td`, `form`, `label`, `input`, `nav`, `a`, `h1`–`h6`, `p`, `blockquote`, `figure`. Well-structured markup should look correct with almost no classes at all.
 - When a class is needed, name it for what the thing **is**, never for what it looks like.
-  - Good: `.card`, `.card__title`, `.card--featured`, `.nav-link`, `.field-error`, `.data-table`, `.site-footer`
+  - Good: `.card`, `.card-featured`, `.nav-link`, `.field-error`, `.data-table`, `.site-footer`
   - Forbidden: `.mt-4`, `.text-red`, `.flex-row`, `.w-full`, `.bold`, `.big-blue-button`, `.col-6`
-- BEM-ish structure: `.block`, `.block__element`, `.block--modifier`. Keep it shallow; nesting beyond two levels usually means the markup needs a component, not a longer selector.
+- BEM-ish structure: `.block`, `.block-element`, `.block-modifier`. Keep it shallow; nesting beyond two levels usually means the markup needs a component, not a longer selector.
 - Never encode a value in a name. A class called `.red-warning` breaks the moment warnings turn amber; `.warning` does not.
+- **The markup is the styling API.** If a component cannot get the styling it needs, its HTML is not yet saying what it means — fix the markup (a better element, a meaningful class), don't bolt on a styling hook.
+- No wrapper `<div>` unless layout genuinely needs it.
 
 ## Global stylesheets
 
-Styles live in global stylesheets embedded on every page — **not** in per-component `<style>` blocks. Components emit semantic markup and inherit their appearance from these sheets.
+Styles live in global stylesheets embedded on every page — **never** in `<style>` blocks, not even for a one-off. Components emit semantic markup and inherit their appearance from these sheets.
 
 The sheets, under `src/lib/styles/`:
 
@@ -59,11 +61,10 @@ New styling belongs in whichever of these sheets owns that concern. Only create 
 
 ## Design tokens
 
-Every colour, space, size, radius, and duration is a custom property defined on `:root` in `tokens.css`. No raw hex values, pixel spacing, or font stacks scattered through the other sheets.
+Every colour, space, size, radius, and duration is a custom property defined on `:root` in `tokens.css`. No raw hex values, pixel spacing, or font stacks scattered through the other sheets. Colours get role names, not colour names; space is one scale used everywhere.
 
 ```css
 :root {
-	/* colour — semantic names, not colour names */
 	--color-surface: #ffffff;
 	--color-surface-raised: #f7f7f8;
 	--color-text: #16161a;
@@ -72,7 +73,6 @@ Every colour, space, size, radius, and duration is a custom property defined on 
 	--color-accent: #2f5fd8;
 	--color-danger: #c0392b;
 
-	/* space — one scale, used everywhere */
 	--space-2xs: 0.25rem;
 	--space-xs: 0.5rem;
 	--space-s: 0.75rem;
@@ -80,7 +80,6 @@ Every colour, space, size, radius, and duration is a custom property defined on 
 	--space-l: 1.5rem;
 	--space-xl: 2.5rem;
 
-	/* type */
 	--font-body: system-ui, sans-serif;
 	--font-mono: ui-monospace, monospace;
 	--size-step-0: 1rem;
@@ -112,7 +111,7 @@ Token names describe role (`--color-danger`), not appearance (`--color-red`). Th
 	border-radius: var(--radius);
 	background: var(--color-surface-raised);
 
-	& .card__title {
+	& .card-title {
 		font-size: var(--size-step-1);
 	}
 
@@ -127,6 +126,10 @@ Token names describe role (`--color-danger`), not appearance (`--color-red`). Th
 - `:is()`, `:where()`, `:has()` to keep selectors short — `:where()` for zero-specificity defaults.
 - `@layer` (`reset, base, components, overrides`) so specificity never needs fighting with `!important`.
 - `gap` for spacing between items rather than margins on children.
+
+## No comments in stylesheets
+
+Stylesheets carry no comments — no section banners, no explanations. Selector names and file ownership (the table above) are the documentation. If a rule needs explaining, the class name is wrong or the rule belongs in a different sheet.
 
 ## Accessibility
 
@@ -143,6 +146,7 @@ Before finishing any styling work:
 1. No Tailwind or utility classes anywhere.
 2. Every class name describes what the element is, not how it looks.
 3. No hardcoded colours, spacing, or font stacks — tokens only.
-4. The rule landed in the correct global sheet; no component `<style>` blocks.
-5. Logical properties, not physical ones.
-6. Focus visible, contrast adequate, motion preference respected.
+4. The rule landed in the correct global sheet; no `<style>` blocks anywhere.
+5. No comments in the stylesheets.
+6. Logical properties, not physical ones.
+7. Focus visible, contrast adequate, motion preference respected.
