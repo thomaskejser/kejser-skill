@@ -46,6 +46,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `code-style` | Any language. Comments default to none (contract only, rationale in `docs/`), guard clauses, fail loudly, no silently-ignored input, testing and verification. |
 | `cpp` | Modern C++: smart pointers, `optional`/`expected`, RAII, `const` everywhere, free functions, no `using namespace`, braces always, CLI11, vcpkg manifest mode, Makefile over raw CMake. |
 | `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax; SQL kept in `.sql` files. |
+| `database` | *Placeholder.* DuckDB for analytics and SQL in `.sql` files are settled; engine choice, naming, keys, types, migrations are TBD. |
 | `collaboration` | Explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
 
 Once installed, skills are referenced as `/<plugin>:<skill>`, e.g. `/kejser-web:css`, `/kejser-code:cpp`.
@@ -67,7 +68,7 @@ plugins/
     skills/{web-stack,sveltekit,css,deploying}/SKILL.md
   kejser-code/
     .claude-plugin/plugin.json
-    skills/{code-style,cpp,sql-design,collaboration}/SKILL.md
+    skills/{code-style,cpp,sql-design,database,collaboration}/SKILL.md
 ```
 
 ## Adding a skill
