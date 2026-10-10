@@ -4,16 +4,28 @@ Personal Claude Code plugin marketplace — coding conventions as installable sk
 
 ## Install
 
+The two clients install this differently — `/plugin` is a CLI command and does not exist in Cowork.
+
+### Cowork (desktop app)
+
+Customize → Plugins → Add → Add marketplace → `thomaskejser/kejser-skill`, then install `kejser-web` from the marketplace listing. A restart may be needed before the skills register.
+
+### Claude Code (CLI)
+
 ```
 /plugin marketplace add thomaskejser/kejser-skill
 /plugin install kejser-web@kejser-skill
 ```
 
-Pin to a tag or branch if you want reproducible behaviour across machines:
+Pin to a tag or branch for reproducible behaviour across machines:
 
 ```
 /plugin marketplace add thomaskejser/kejser-skill#v0.1.0
 ```
+
+### Note on `~/.claude/skills/`
+
+Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork does **not** — it only loads skills from installed plugins and account-level storage. Distributing through this marketplace is what makes the same skills work in both.
 
 ## Contents
 
