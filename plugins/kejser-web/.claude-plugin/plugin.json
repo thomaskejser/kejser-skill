@@ -1,0 +1,10 @@
+{
+	"name": "kejser-web",
+	"description": "SvelteKit, CSS and deployment conventions: every UX control is a component, semantic CSS with no Tailwind, and adapter-node deploys.",
+	"version": "0.1.0",
+	"author": {
+		"name": "Thomas Kejser",
+		"email": "thomas@kejser.org"
+	},
+	"keywords": ["sveltekit", "svelte", "css", "frontend", "deployment"]
+}
