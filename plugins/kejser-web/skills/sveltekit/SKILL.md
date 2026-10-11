@@ -89,7 +89,7 @@ Use runes everywhere; do not mix in Svelte 4 idioms.
 
 ## SQL
 
-SQL lives in standalone `.sql` files (e.g. `src/lib/server/sql/`), imported with Vite's `?raw` suffix — never as template strings inlined in TypeScript. Change a query by editing its `.sql` file.
+SQL lives in standalone `.sql` files (e.g. `src/lib/server/sql/`), imported with Vite's `?raw` suffix and executed as raw SQL with named parameters bound by the driver — never as template strings inlined in TypeScript, and no ORM or query builder. See `kejser-code:database`.
 
 ```ts
 import topEngines from '$lib/server/sql/top-engines.sql?raw';
