@@ -1,7 +1,7 @@
 {
 	"name": "kejser-code",
-	"description": "Language-agnostic and C++ conventions: minimal contract-only comments, fail loudly, modern C++, SQL surface design, and how agents commit and report in shared trees.",
-	"version": "0.3.3",
+	"description": "Language-agnostic and C++ conventions: minimal contract-only comments, fail loudly, modern C++, SQL and database design, Markdown style, and how agents commit and report in shared trees.",
+	"version": "0.4.0",
 	"author": {
 		"name": "Thomas Kejser",
 		"email": "thomas@kejser.org"
@@ -12,6 +12,7 @@
 		"sql",
 		"git",
 		"collaboration",
-		"database"
+		"database",
+		"markdown"
 	]
 }
