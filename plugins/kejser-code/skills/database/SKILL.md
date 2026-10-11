@@ -20,6 +20,12 @@ How databases are chosen, modelled and evolved in Thomas's projects. For designi
 
 - Table names are **singular**, lowercase, words joined by underscores: `customer`, `order_line`, not `Customers` or `orderLines`.
 - ID columns are named **`<table>_id`** — the primary key of `customer` is `customer_id`, and a column referencing it elsewhere is also `customer_id`. Never a bare `id`.
+- The column holding a row's **display name is named after the table**: `customer` has a column `customer` with the name shown for that customer. Never `name`, `title` or `label`.
+
+### Keys
+
+- Primary keys are **surrogate integer** keys (`<table>_id`, `BIGINT`). Generating them from a sequence, identity or similar mechanism is fine.
+- **Natural keys** are declared as a secondary **`UNIQUE` index**, never as the primary key.
 
 ### Types
 
@@ -43,11 +49,14 @@ Use only these:
 ```sql
 CREATE TABLE customer (
     customer_id BIGINT  NOT NULL PRIMARY KEY,
-    name        TEXT    NOT NULL DEFAULT '',
+    customer    TEXT    NOT NULL DEFAULT '',
+    vat_number  TEXT    NOT NULL,
     credit      DECIMAL NOT NULL DEFAULT 0,
     valid_from  DATE    NOT NULL DEFAULT CURRENT_DATE,
     valid_to    DATE    NOT NULL DEFAULT '9999-12-31'
 );
+
+CREATE UNIQUE INDEX customer_vat_number ON customer (vat_number);
 ```
 
 ### Query access from apps
@@ -58,7 +67,7 @@ A file may contain parameters that are filled in at execution time. Use named pl
 
 ```sql
 -- customer-by-id.sql
-SELECT customer_id, name, credit
+SELECT customer_id, customer, credit
 FROM customer
 WHERE customer_id = :customer_id
   AND valid_to = '9999-12-31';
@@ -66,8 +75,8 @@ WHERE customer_id = :customer_id
 
 ## TBD — fill in before relying on this skill
 
-- **Naming** — column names beyond IDs; schema/namespace layout
-- **Keys** — surrogate vs natural keys; how `<table>_id` values are generated (see the SQLite caveat below); UUID/ULID ever?
+- **Naming** — other column names; index naming; schema/namespace layout
+- **SQLite key generation** — SQLite has no sequences, and a `BIGINT PRIMARY KEY` does not auto-assign (see caveats below): app-generated values, or an `INTEGER PRIMARY KEY` exception?
 - **Types** — timestamps and time zones; booleans; enums vs lookup tables; JSON columns
 - **Constraints** — check constraints; foreign keys enforced or not (SQLite needs `PRAGMA foreign_keys = ON` per connection)
 - **Warehouse modelling** — staging/`dw` layering, star schema vs wide tables, naming of facts and dimensions
