@@ -24,7 +24,7 @@ How databases are chosen, modelled and evolved in Thomas's projects. For designi
 
 ### Keys
 
-- Primary keys are **surrogate integer** keys (`<table>_id`, `BIGINT`). Generating them from a sequence, identity or similar mechanism is fine.
+- Primary keys are **surrogate integer** keys (`<table>_id`, `BIGINT`). The database generates them where it can (a sequence, identity column or similar). Where it cannot — as in SQLite, where a `BIGINT` key does not auto-assign — the app generates them. Don't switch to `INTEGER PRIMARY KEY` to get SQLite's rowid behaviour.
 - **Natural keys** are declared as a secondary **`UNIQUE` index**, never as the primary key.
 
 ### Types
@@ -76,7 +76,6 @@ WHERE customer_id = :customer_id
 ## TBD — fill in before relying on this skill
 
 - **Naming** — other column names; index naming; schema/namespace layout
-- **SQLite key generation** — SQLite has no sequences, and a `BIGINT PRIMARY KEY` does not auto-assign (see caveats below): app-generated values, or an `INTEGER PRIMARY KEY` exception?
 - **Types** — timestamps and time zones; booleans; enums vs lookup tables; JSON columns
 - **Constraints** — check constraints; foreign keys enforced or not (SQLite needs `PRAGMA foreign_keys = ON` per connection)
 - **Warehouse modelling** — staging/`dw` layering, star schema vs wide tables, naming of facts and dimensions
@@ -89,7 +88,7 @@ WHERE customer_id = :customer_id
 
 SQLite maps declared types to storage affinities, so the type list above behaves differently there:
 
-- `BIGINT PRIMARY KEY` is **not** an alias for the rowid — only the exact spelling `INTEGER PRIMARY KEY` is. A `BIGINT` key does not auto-assign values; the application must supply them.
+- `BIGINT PRIMARY KEY` is **not** an alias for the rowid — only the exact spelling `INTEGER PRIMARY KEY` is. A `BIGINT` key does not auto-assign values, so the app generates them (see Keys).
 - `DECIMAL` gets NUMERIC affinity and is stored as an integer or 8-byte float — it is **not** exact. Exact money needs integer minor units or `TEXT`.
 - `STRICT` tables accept only `INT`, `INTEGER`, `REAL`, `TEXT`, `BLOB`, `ANY` — the type list above cannot be used in a `STRICT` table.
 
