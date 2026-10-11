@@ -48,6 +48,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax; SQL kept in `.sql` files. |
 | `database` | *Partly placeholder.* SQLite for OLTP, DuckDB for analytics; singular snake_case tables; surrogate integer `<table>_id` keys, natural keys as unique indexes; display-name column named after the table; only `BIGINT`/`DOUBLE`/`DECIMAL`/`TEXT`; avoid NULL (`9999-12-31` for open-ended dates); apps run raw SQL from `.sql` files with bound parameters. Migrations and more are TBD. |
 | `markdown` | Every `.md` file: one sentence per line, intent in bullets rather than prose, a single `#` title. |
+| `skill-updates` | Only the running session named `Skills` changes this repo; other agents message it, or ask Thomas to start it. |
 | `collaboration` | Explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
 
 Once installed, skills are referenced as `/<plugin>:<skill>`, e.g. `/kejser-web:css`, `/kejser-code:cpp`.
@@ -69,10 +70,12 @@ plugins/
     skills/{web-stack,sveltekit,css,deploying}/SKILL.md
   kejser-code/
     .claude-plugin/plugin.json
-    skills/{code-style,cpp,sql-design,database,markdown,collaboration}/SKILL.md
+    skills/{code-style,cpp,sql-design,database,markdown,skill-updates,collaboration}/SKILL.md
 ```
 
 ## Adding a skill
+
+Only the agent session named `Skills` changes this repo — see `kejser-code:skill-updates`.
 
 1. Create `plugins/<plugin>/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`).
 2. Write the `description` as a trigger — it is what Claude reads to decide whether the skill is relevant, so state the situations that should invoke it.

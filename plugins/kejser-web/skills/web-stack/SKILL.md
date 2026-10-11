@@ -43,4 +43,4 @@ Target Firefox (Manifest V3), built with WXT.
 
 ## Recording new preferences
 
-These preferences are maintained in the `kejser-skill` repo (github.com/thomaskejser/kejser-skill). When Thomas states a new web preference, it belongs there — don't record it in a project's own files.
+These preferences are maintained in the `kejser-skill` repo. When Thomas states a new web preference, send it to the `Skills` agent (see `kejser-code:skill-updates`) — don't edit the skill yourself, and don't record it in a project's own files.

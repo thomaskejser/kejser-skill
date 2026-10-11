@@ -49,4 +49,4 @@ A build that fails `check`, `lint`, or `test` does not ship.
 
 ## Updating this skill
 
-As deployment details get decided, replace the matching *TBD* bullet with the concrete answer and move it up into "What's settled". Keep the real commands here verbatim so they can be copied without editing.
+As deployment details get decided, send it to the `Skills` agent (see `kejser-code:skill-updates`). It replaces the matching *TBD* bullet with the concrete answer and moves it up into "What's settled", keeping real commands verbatim so they can be copied without editing.

@@ -7,7 +7,7 @@ description: Conventions for new databases used by applications (existing databa
 
 How databases are chosen, modelled and evolved in Thomas's projects. For designing SQL syntax inside a database engine, see `kejser-code:sql-design`.
 
-> **⚠️ Partly placeholder.** Sections marked *TBD* are not decided yet. Where one applies, do not guess — ask, then record the answer here.
+> **⚠️ Partly placeholder.** Sections marked *TBD* are not decided yet. Where one applies, do not guess — ask Thomas, then send it to the `Skills` agent (see `kejser-code:skill-updates`).
 
 ## Scope: new databases only
 
@@ -98,4 +98,4 @@ SQLite maps declared types to storage affinities, so the type list above behaves
 
 ## Updating this skill
 
-When a convention is decided, replace its *TBD* bullet with the concrete rule and move it into "What's settled".
+When a convention is decided, send it to the `Skills` agent (see `kejser-code:skill-updates`). It replaces the *TBD* bullet with the concrete rule and moves it into "What's settled".
