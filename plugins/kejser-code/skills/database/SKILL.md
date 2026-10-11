@@ -1,6 +1,6 @@
 ---
 name: database
-description: Conventions for databases used by applications — engine choice, schema and naming, keys, types, migrations, and how queries live in code. PARTLY PLACEHOLDER: engines, naming, types and NULL rules are settled; the rest is TBD. Use whenever creating or changing a database schema, writing a migration, choosing a database engine, or modelling tables for an application or warehouse.
+description: Conventions for new databases used by applications (existing databases keep their conventions and names) — engine choice, schema and naming, keys, types, migrations, and how queries live in code. PARTLY PLACEHOLDER: engines, naming, types and NULL rules are settled; the rest is TBD. Use whenever creating or changing a database schema, writing a migration, choosing a database engine, or modelling tables for an application or warehouse.
 ---
 
 # Database conventions
@@ -8,6 +8,10 @@ description: Conventions for databases used by applications — engine choice, s
 How databases are chosen, modelled and evolved in Thomas's projects. For designing SQL syntax inside a database engine, see `kejser-code:sql-design`.
 
 > **⚠️ Partly placeholder.** Sections marked *TBD* are not decided yet. Where one applies, do not guess — ask, then record the answer here.
+
+## Scope: new databases only
+
+These conventions apply when creating a **new** database. A database that already exists, and that data or code already refers to, keeps its existing conventions and names. Do not rename its tables or columns, re-key it, retype it, remove its NULLs or move its queries to `.sql` files to make it match this skill. New tables in an existing database follow that database's existing style.
 
 ## What's settled
 
