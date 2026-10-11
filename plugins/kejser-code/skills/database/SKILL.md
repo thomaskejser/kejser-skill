@@ -19,6 +19,7 @@ These conventions apply when creating a **new** database. A database that alread
 
 - **SQLite** is the default for transactional application data.
 - **DuckDB** is the default for local analytics, staging and reporting data.
+  From Node, use the `duckdb-access` package (github.com/thomaskejser/duckdb-access): `npm i github:thomaskejser/duckdb-access#v0.1.0 @duckdb/node-api`. Don't write your own connection code.
 
 ### Naming
 

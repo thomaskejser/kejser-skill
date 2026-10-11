@@ -36,7 +36,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 |---|---|
 | `web-stack` | Default stack for new web work: SvelteKit on Node, scaffolding commands, tooling, dev loop (restart after every edit, report the localhost URL), DuckDB, integration/secret handling, Firefox extensions via WXT. |
 | `sveltekit` | Svelte 5 + SvelteKit conventions. Central rule: **every UX control is a component** — pages and layouts are composition only. |
-| `css` | **No Tailwind, no utility classes.** Semantic element selectors, meaning-based class names, design tokens, and six global stylesheets (`tokens`, `reset`, `text`, `table`, `form`, `navigation`). |
+| `css` | **No Tailwind, no utility classes.** Selectors by meaning (elements, state, ARIA, `data-*`, semantic classes); eight global sheets in cascade layers (`tokens`, `reset`, `text`, `table`, `form`, `navigation`, `layout`, `feedback`); role tokens with `light-dark()`; the page never scrolls sideways. |
 | `deploying` | *Placeholder.* adapter-node build pipeline is settled; server specifics are marked TBD and must be filled in before use. |
 
 ### `kejser-code`

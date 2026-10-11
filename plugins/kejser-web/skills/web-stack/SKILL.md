@@ -42,6 +42,7 @@ Thomas iterates on running apps together with the agent.
 ## Data
 
 - **DuckDB** is the default for analytics and reporting data — staged files, a local warehouse, read-mostly query backends.
+- To access DuckDB from Node, use the `duckdb-access` package (github.com/thomaskejser/duckdb-access): `npm i github:thomaskejser/duckdb-access#v0.1.0 @duckdb/node-api`. Don't write your own connection code.
 - SQL lives in `.sql` files, not inlined in TypeScript (see `kejser-web:sveltekit`).
 
 ## Third-party integrations

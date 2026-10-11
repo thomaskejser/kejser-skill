@@ -6,14 +6,14 @@
 	},
 	"metadata": {
 		"description": "Thomas Kejser's personal Claude Code plugins — coding conventions and workflow skills.",
-		"version": "0.7.0"
+		"version": "0.8.0"
 	},
 	"plugins": [
 		{
 			"name": "kejser-web",
 			"source": "./plugins/kejser-web",
 			"description": "SvelteKit stack and conventions: default stack and scaffolding, every UX control is a component, semantic CSS with no Tailwind, and adapter-node deploys.",
-			"version": "0.2.3",
+			"version": "0.3.0",
 			"author": {
 				"name": "Thomas Kejser",
 				"email": "thomas@kejser.org"
@@ -31,7 +31,7 @@
 			"name": "kejser-code",
 			"source": "./plugins/kejser-code",
 			"description": "Language-agnostic and C++ conventions: minimal contract-only comments, fail loudly, modern C++, SQL and database design, Markdown style, and how agents commit and report in shared trees.",
-			"version": "0.6.0",
+			"version": "0.6.1",
 			"author": {
 				"name": "Thomas Kejser",
 				"email": "thomas@kejser.org"
