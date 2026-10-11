@@ -67,13 +67,14 @@ CREATE UNIQUE INDEX customer_vat_number ON customer (vat_number);
 
 Apps always execute **raw SQL read from `.sql` files** — no ORM, no query builder, no SQL assembled from strings in host-language code. To change a query, edit its `.sql` file.
 
-A file may contain parameters that are filled in at execution time. Use named placeholders (`:customer_id`) and bind values through the driver; never splice values into the SQL text.
+A file may contain parameters that are filled in at execution time. Use named placeholders written `$customer_id` — both SQLite and DuckDB accept that form — and bind values through the driver; never splice values into the SQL text.
+A parameter is always a value; it cannot supply a table or column name.
 
 ```sql
 -- customer-by-id.sql
 SELECT customer_id, customer, credit
 FROM customer
-WHERE customer_id = :customer_id
+WHERE customer_id = $customer_id
   AND valid_to = '9999-12-31';
 ```
 

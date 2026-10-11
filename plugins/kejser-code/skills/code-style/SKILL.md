@@ -1,6 +1,6 @@
 ---
 name: code-style
-description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), guard clauses, fail loudly, no silently-ignored input, DRY, minimal local changes, and how to test and verify. Use whenever writing, editing, or reviewing code in any language, writing code comments, or deciding where design rationale goes.
+description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, minimal local changes, and how to test and verify. Use whenever writing, editing, or reviewing code in any language, writing code comments, or deciding where design rationale goes.
 ---
 
 # Code style
@@ -20,11 +20,22 @@ Never:
 
 - restate the code (`// Returns the schema` above `Schema()`)
 - section banners (`// ---- Helpers ----`)
-- history or narration — what changed, why an alternative was rejected, task or ticket cross-references. That belongs in git and in docs.
+- history or narration — what changed, why an alternative was rejected, task or ticket cross-references (see below)
 - prose written to convince a reviewer. Tests and assertions carry that burden.
 - a comment longer than the code it documents
 
 If a block needs a comment to explain its role, extract it into a well-named function instead. If an explanation needs a paragraph, it belongs in `docs/<topic>.md` (or the README that owns the area), with at most a one-line pointer from the code. If it isn't worth a doc, it goes nowhere.
+
+## Describe the code as it is now
+
+Comments and Markdown files (READMEs, `docs/`, `CLAUDE.md`, `SKILL.md`) describe what the code does **now**.
+They never tell the story of how it got here.
+
+- No "previously", "now uses", "was changed to", "after the refactor", "we tried X first", "new:" or "fixed:".
+- No changelog sections, dated notes or "update" paragraphs in docs.
+- When behaviour changes, rewrite the affected text so it reads as if it had always been this way.
+- History lives in git: commit messages, and `git log`/`git blame` for whoever needs it.
+- A rejected alternative may be documented only as a present-tense constraint, e.g. "X is not used because it fails under Y."
 
 ## Shape
 

@@ -1,6 +1,6 @@
 ---
 name: markdown
-description: How Thomas wants Markdown files written — one sentence per line, intent stated in bullets rather than long prose, and a single top-level # header. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
+description: How Thomas wants Markdown files written — one sentence per line, intent stated in bullets rather than long prose, a single top-level # header, and describing the current state rather than history. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
 ---
 
 # Markdown files
@@ -31,6 +31,13 @@ It governs files, not chat replies.
 - Lead with the claim; follow with the reason only when it isn't obvious.
 - Prose is for short context — one to three sentences under a heading, not paragraphs.
 - Prefer a table when bullets would repeat the same attributes for several items.
+
+## Present tense, current state
+
+- A Markdown file describes what the code does now, not how it got there.
+- No changelog sections, "previously…", "now uses…", or dated update notes.
+- When the code changes, rewrite the affected text instead of appending to it.
+- History lives in git (see `kejser-code:code-style`).
 
 ## Headings
 
