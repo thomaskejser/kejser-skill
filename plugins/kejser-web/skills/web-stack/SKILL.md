@@ -1,6 +1,6 @@
 ---
 name: web-stack
-description: Thomas's default web stack and project setup — SvelteKit on Node, scaffolding commands, tooling, the dev loop (restart the dev server after every edit and report the localhost URL), DuckDB for analytics data, third-party integration and secret handling, browser extensions. Load before scaffolding a new web app or site, before editing a web app Thomas is iterating on, choosing a framework or library, adding an integration with an external service, or building a browser extension.
+description: Thomas's default web stack and project setup — SvelteKit on Node, scaffolding commands, a favicon in every app (an agent-drawn SVG by default), tooling, the dev loop (restart the dev server after every edit and report the localhost URL), DuckDB for analytics data, third-party integration and secret handling, browser extensions. Load before scaffolding a new web app or site, before adding or changing a favicon, before editing a web app Thomas is iterating on, choosing a framework or library, adding an integration with an external service, or building a browser extension.
 ---
 
 # Web stack
@@ -20,6 +20,17 @@ Use `@sveltejs/adapter-node` — we deploy to our own servers (see `kejser-web:d
 A static content site uses `@sveltejs/adapter-static` instead (see `kejser-web:svelte-static`).
 
 Do not pick React, Vue/Nuxt, Next, or a static-site generator for new work unless asked. An existing project on another framework stays on it; follow its conventions rather than migrating.
+
+## Favicon
+
+- Every web app and site has its own favicon.
+  Never ship the scaffold's Svelte logo, and never ship without one.
+- By default the agent draws it as an SVG, by hand, without asking first.
+  Use a supplied logo or image instead when Thomas provides one.
+- Keep it simple enough to read at 16px: a letter, a monogram or one or two shapes, on a square `viewBox` such as `0 0 32 32`.
+- Use the colour values of the app's accent tokens (see `kejser-web:css`), with enough contrast on both light and dark browser tabs.
+  A favicon can't read CSS custom properties, so the values are copied in.
+- It replaces `src/lib/assets/favicon.svg`, which the scaffold already links from the root `+layout.svelte` with `<link rel="icon" href={favicon} />`.
 
 ## Tooling
 

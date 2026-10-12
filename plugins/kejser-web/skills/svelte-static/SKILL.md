@@ -158,3 +158,4 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 5. Canonical URL, description and title on every page; sitemap complete, and `robots.txt` points to it.
 6. Styling follows `kejser-web:css`.
 7. No secrets in `config.json` or `static/`.
+8. The site has its own favicon (see `kejser-web:web-stack`).
