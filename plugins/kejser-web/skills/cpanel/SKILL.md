@@ -6,7 +6,7 @@ description: Publishing a static site to cPanel shared hosting over FTPS — the
 # Publishing to cPanel
 
 cPanel shared hosting serves files and runs PHP; it does not run a Node server.
-This skill covers static sites: SvelteKit with `@sveltejs/adapter-static`, prerendered into `build/`.
+This skill covers static sites: SvelteKit with `@sveltejs/adapter-static`, prerendered into `build/` (see `kejser-web:svelte-static`).
 Node servers deploy as described in `kejser-web:deploying`.
 
 ## How it works

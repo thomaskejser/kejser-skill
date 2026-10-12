@@ -11,7 +11,7 @@ How SvelteKit apps get built and shipped to our servers.
 
 ## What's settled
 
-**Adapter.** `@sveltejs/adapter-node`. We deploy to our own servers, so platform adapters (Vercel, Netlify, Cloudflare) are not used. The adapter emits a standalone Node server into `build/`. Static sites on cPanel shared hosting use `@sveltejs/adapter-static` and publish as described in `kejser-web:cpanel`.
+**Adapter.** `@sveltejs/adapter-node`. We deploy to our own servers, so platform adapters (Vercel, Netlify, Cloudflare) are not used. The adapter emits a standalone Node server into `build/`. Static sites use `@sveltejs/adapter-static` (see `kejser-web:svelte-static`) and publish as described in `kejser-web:cpanel`.
 
 **Build.**
 

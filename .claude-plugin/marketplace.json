@@ -6,14 +6,14 @@
 	},
 	"metadata": {
 		"description": "Thomas Kejser's personal Claude Code plugins — coding conventions and workflow skills.",
-		"version": "0.9.0"
+		"version": "0.10.0"
 	},
 	"plugins": [
 		{
 			"name": "kejser-web",
 			"source": "./plugins/kejser-web",
-			"description": "SvelteKit stack and conventions: default stack and scaffolding, every UX control is a component, semantic CSS with no Tailwind, adapter-node deploys, and static publishing to cPanel over FTPS.",
-			"version": "0.4.0",
+			"description": "SvelteKit stack and conventions: default stack and scaffolding, every UX control is a component, semantic CSS with no Tailwind, adapter-node deploys, static content sites, and publishing them to cPanel over FTPS.",
+			"version": "0.5.0",
 			"author": {
 				"name": "Thomas Kejser",
 				"email": "thomas@kejser.org"
