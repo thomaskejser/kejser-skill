@@ -6,7 +6,7 @@
 	},
 	"metadata": {
 		"description": "Thomas Kejser's personal Claude Code plugins — coding conventions and workflow skills.",
-		"version": "0.12.0"
+		"version": "0.13.0"
 	},
 	"plugins": [
 		{
@@ -30,8 +30,8 @@
 		{
 			"name": "kejser-code",
 			"source": "./plugins/kejser-code",
-			"description": "Language-agnostic and C++ conventions: minimal contract-only comments, fail loudly, modern C++, SQL and database design, Markdown style, and how agents commit and report in shared trees.",
-			"version": "0.6.1",
+			"description": "Language-agnostic and C++ conventions: minimal contract-only comments, fail loudly, modern C++, SQL and database design, ETL, Markdown style, and how agents commit and report in shared trees.",
+			"version": "0.7.0",
 			"author": {
 				"name": "Thomas Kejser",
 				"email": "thomas@kejser.org"

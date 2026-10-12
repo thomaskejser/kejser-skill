@@ -84,7 +84,7 @@ WHERE customer_id = $customer_id
 - **Naming** — other column names; index naming; schema/namespace layout
 - **Types** — timestamps and time zones; booleans; enums vs lookup tables; JSON columns
 - **Constraints** — check constraints; foreign keys enforced or not (SQLite needs `PRAGMA foreign_keys = ON` per connection)
-- **Warehouse modelling** — staging/`dw` layering, star schema vs wide tables, naming of facts and dimensions
+- **Warehouse modelling** — staging/`dw` layering (loading itself is in `kejser-code:etl`), star schema vs wide tables, naming of facts and dimensions
 - **Migrations** — tool, file naming, forward-only or reversible, where they run relative to the app deploy
 - **Connection handling** — pooling, pragmas set per connection, transactions
 - **Indexing and performance** — when to index, how to verify a plan
