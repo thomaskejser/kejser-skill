@@ -1,0 +1,142 @@
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const simpleIcons = require('simple-icons');
+const fontAwesome = require('@fortawesome/free-brands-svg-icons');
+const pinned = require('./package.json').devDependencies;
+const siVersion = pinned['simple-icons'];
+const faVersion = pinned['@fortawesome/free-brands-svg-icons'];
+
+const LIGHT_SURFACE = '#FFFFFF';
+const DARK_SURFACE = '#121212';
+const MIN_CONTRAST = 3;
+
+const SIMPLE_ICONS = [
+	'bluesky', 'discord', 'facebook', 'github', 'instagram', 'mastodon', 'medium', 'messenger',
+	'patreon', 'pinterest', 'reddit', 'signal', 'snapchat', 'substack', 'telegram', 'threads',
+	'tiktok', 'tumblr', 'twitch', 'vimeo', 'whatsapp', 'x', 'youtube'
+];
+
+const FONT_AWESOME = {
+	linkedin: {
+		icon: 'faLinkedin',
+		title: 'LinkedIn',
+		hex: '0A66C2',
+		guidelines: 'https://brand.linkedin.com/downloads'
+	}
+};
+
+function luminance(hex) {
+	const [r, g, b] = [0, 2, 4].map((i) => {
+		const c = parseInt(hex.replace('#', '').slice(i, i + 2), 16) / 255;
+		return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+	});
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a, b) {
+	const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+	return (hi + 0.05) / (lo + 0.05);
+}
+
+function onSurface(hex, surface, fallback) {
+	return contrast(hex, surface) >= MIN_CONTRAST ? hex : fallback;
+}
+
+function fromSimpleIcons(slug) {
+	const icon = Object.values(simpleIcons).find((i) => i.slug === slug);
+	if (!icon) {
+		throw new Error(`simple-icons ${siVersion} has no icon "${slug}"`);
+	}
+	return {
+		slug,
+		title: icon.title,
+		hex: `#${icon.hex}`,
+		path: icon.path,
+		transform: '',
+		source: `Simple Icons ${siVersion}`,
+		licence: 'CC0-1.0',
+		guidelines: icon.guidelines ?? ''
+	};
+}
+
+function fromFontAwesome(slug, { icon: name, title, hex, guidelines }) {
+	const icon = fontAwesome[name];
+	if (!icon) {
+		throw new Error(`Font Awesome ${faVersion} has no icon "${name}"`);
+	}
+	const [width, height, , , path] = icon.icon;
+	const scale = 24 / Math.max(width, height);
+	const dx = (24 - width * scale) / 2;
+	const dy = (24 - height * scale) / 2;
+	return {
+		slug,
+		title,
+		hex: `#${hex}`,
+		path,
+		transform: `translate(${+dx.toFixed(4)} ${+dy.toFixed(4)}) scale(${+scale.toFixed(6)})`,
+		source: `Font Awesome Free ${faVersion} (${name})`,
+		licence: 'CC-BY-4.0',
+		guidelines
+	};
+}
+
+function svg(logo, fill) {
+	const attribution =
+		logo.licence === 'CC-BY-4.0'
+			? `<!-- ${logo.source}, https://fontawesome.com, CC BY 4.0 https://creativecommons.org/licenses/by/4.0/ -->\n`
+			: '';
+	const transform = logo.transform ? ` transform="${logo.transform}"` : '';
+	return `${attribution}<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" fill="${fill}"><title>${logo.title}</title><path${transform} d="${logo.path}"/></svg>\n`;
+}
+
+const logos = [
+	...SIMPLE_ICONS.map(fromSimpleIcons),
+	...Object.entries(FONT_AWESOME).map(([slug, spec]) => fromFontAwesome(slug, spec))
+]
+	.map((logo) => ({
+		...logo,
+		light: onSurface(logo.hex, LIGHT_SURFACE, '#000000'),
+		dark: onSurface(logo.hex, DARK_SURFACE, '#FFFFFF')
+	}))
+	.sort((a, b) => a.slug.localeCompare(b.slug));
+
+rmSync('svg', { recursive: true, force: true });
+mkdirSync('svg');
+mkdirSync('svelte', { recursive: true });
+
+for (const logo of logos) {
+	writeFileSync(`svg/${logo.slug}.svg`, svg(logo, 'currentColor'));
+	writeFileSync(`svg/${logo.slug}-light.svg`, svg(logo, logo.light));
+	writeFileSync(`svg/${logo.slug}-dark.svg`, svg(logo, logo.dark));
+}
+
+const entries = logos
+	.map((l) => {
+		const attribution = l.licence === 'CC-BY-4.0' ? `\t// ${l.source}, https://fontawesome.com, CC BY 4.0\n` : '';
+		return `${attribution}\t${JSON.stringify(l.slug)}: { title: ${JSON.stringify(l.title)}, path: ${JSON.stringify(l.path)}, transform: ${JSON.stringify(l.transform)} }`;
+	})
+	.join(',\n');
+writeFileSync(
+	'svelte/social-logos.ts',
+	`export interface SocialLogo {\n\ttitle: string;\n\tpath: string;\n\ttransform: string;\n}\n\nexport const socialLogos = {\n${entries}\n} as const satisfies Record<string, SocialLogo>;\n\nexport type SocialBrand = keyof typeof socialLogos;\n`
+);
+
+const tones = logos
+	.map((l) => `\t.social-logo[data-tone="brand"][data-brand="${l.slug}"] {\n\t\tcolor: light-dark(${l.light}, ${l.dark});\n\t}`)
+	.join('\n\n');
+writeFileSync(
+	'svelte/social-logos.css',
+	`@layer components {\n\t.social-logo {\n\t\tinline-size: var(--icon-size, 1em);\n\t\tblock-size: var(--icon-size, 1em);\n\t\tflex: none;\n\t}\n\n${tones}\n}\n`
+);
+
+const rows = logos
+	.map((l) => `| \`${l.slug}\` | ${l.title} | \`${l.hex}\` | \`${l.light}\` | \`${l.dark}\` | ${l.source} | ${l.licence} | ${l.guidelines ? `[guidelines](${l.guidelines})` : 'none published'} |`)
+	.join('\n');
+writeFileSync(
+	'sources.md',
+	`# Logo sources\n\nGenerated by \`generate.mjs\`; edit the script, not this file.\n\n- Light is the fill on light surfaces, dark the fill on dark ones.\n- Each is the brand colour when it reaches ${MIN_CONTRAST}:1 contrast against \`${LIGHT_SURFACE}\` or \`${DARK_SURFACE}\`, otherwise black or white.\n\n| Slug | Brand | Brand colour | Light | Dark | Source | Licence | Brand rules |\n|---|---|---|---|---|---|---|---|\n${rows}\n`
+);
+
+console.log(`wrote ${logos.length} logos`);

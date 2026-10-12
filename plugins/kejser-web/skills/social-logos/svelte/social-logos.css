@@ -1,0 +1,103 @@
+@layer components {
+	.social-logo {
+		inline-size: var(--icon-size, 1em);
+		block-size: var(--icon-size, 1em);
+		flex: none;
+	}
+
+	.social-logo[data-tone="brand"][data-brand="bluesky"] {
+		color: light-dark(#1185FE, #1185FE);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="discord"] {
+		color: light-dark(#5865F2, #5865F2);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="facebook"] {
+		color: light-dark(#0866FF, #0866FF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="github"] {
+		color: light-dark(#181717, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="instagram"] {
+		color: light-dark(#FF0069, #FF0069);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="linkedin"] {
+		color: light-dark(#0A66C2, #0A66C2);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="mastodon"] {
+		color: light-dark(#6364FF, #6364FF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="medium"] {
+		color: light-dark(#000000, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="messenger"] {
+		color: light-dark(#0866FF, #0866FF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="patreon"] {
+		color: light-dark(#000000, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="pinterest"] {
+		color: light-dark(#BD081C, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="reddit"] {
+		color: light-dark(#FF4500, #FF4500);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="signal"] {
+		color: light-dark(#3B45FD, #3B45FD);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="snapchat"] {
+		color: light-dark(#000000, #FFFC00);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="substack"] {
+		color: light-dark(#000000, #FF6719);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="telegram"] {
+		color: light-dark(#000000, #26A5E4);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="threads"] {
+		color: light-dark(#000000, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="tiktok"] {
+		color: light-dark(#000000, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="tumblr"] {
+		color: light-dark(#36465D, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="twitch"] {
+		color: light-dark(#9146FF, #9146FF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="vimeo"] {
+		color: light-dark(#000000, #1AB7EA);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="whatsapp"] {
+		color: light-dark(#000000, #25D366);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="x"] {
+		color: light-dark(#000000, #FFFFFF);
+	}
+
+	.social-logo[data-tone="brand"][data-brand="youtube"] {
+		color: light-dark(#FF0000, #FF0000);
+	}
+}
