@@ -17,6 +17,7 @@ npx sv add sveltekit-adapter="adapter:node" prettier eslint vitest
 ```
 
 Use `@sveltejs/adapter-node` — we deploy to our own servers (see `kejser-web:deploying`).
+A static site hosted on cPanel uses `@sveltejs/adapter-static` instead (see `kejser-web:cpanel`).
 
 Do not pick React, Vue/Nuxt, Next, or a static-site generator for new work unless asked. An existing project on another framework stays on it; follow its conventions rather than migrating.
 
