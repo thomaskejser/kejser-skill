@@ -45,6 +45,8 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
   A page that genuinely needs interactivity sets `export const csr = true;` in its own `+page.ts`.
 - `load` functions in `+page.server.ts` run at build time, so they read content from disk with `node:fs`.
 - Every dynamic route (`[post]`, `[tag]`, `[page]`) exports `entries()` listing every value it renders.
+- `src/routes/404/+page.svelte` is the not-found page; it prerenders to `404.html`, which the host serves for unknown paths.
+  adapter-static's `fallback` is not used: without client rendering, its page is empty.
 
 ### Broken links fail the build
 
@@ -85,7 +87,7 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
   Articles are prose; the bullets-over-prose rule is for repo docs.
 - Links between content files are written as relative `.md` paths, so they also work on GitHub.
   The renderer strips the `.md` extension.
-- One server-only module (`$lib/server/content.ts`) reads, parses and sorts a collection.
+- One server-only module (`src/lib/server/content.ts`) reads, parses and sorts a collection.
   Routes call it; they never parse Markdown themselves.
 
 ### Rendering Markdown
@@ -140,13 +142,14 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 "prebuild": "node scripts/convert-images.ts",
 "build": "vite build && node scripts/cleanup-build.ts",
 "preview": "vite preview",
-"deploy": "npm run build && node --env-file-if-exists=.env scripts/deploy-cpanel.ts"
+"deploy": "npm run build && node --env-file-if-exists=.env scripts/deploy-cpanel.ts MYSITE"
 ```
 
 - Output goes to `build/`.
+- `MYSITE` stands for the site's deploy-variable prefix (see `kejser-web:cpanel`).
 - `cleanup-build.ts` removes the `__data.json` files, which a site without client rendering never requests.
 - adapter-static writes `/about` as `about.html`.
-  The host must serve extensionless URLs from `.html` files; cPanel's Apache does.
+  Apache needs the `static/.htaccess` from `kejser-web:cpanel` to serve it at `/about`, and to serve `404.html` for unknown paths.
 - Check the built site with `npm run preview` before deploying, not only with `vite dev`.
 
 ## Review checklist
@@ -159,3 +162,4 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 6. Styling follows `kejser-web:css`.
 7. No secrets in `config.json` or `static/`.
 8. The site has its own favicon (see `kejser-web:web-stack`).
+9. `static/.htaccess` from `kejser-web:cpanel`, carrying the server's PHP handler block, and a prerendered `404` page.

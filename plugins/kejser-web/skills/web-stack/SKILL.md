@@ -16,6 +16,8 @@ npx sv create <dir> --template minimal --types ts
 npx sv add sveltekit-adapter="adapter:node" prettier eslint vitest
 ```
 
+This creates a SvelteKit 3 project; `kejser-web:sveltekit` lists what differs from SvelteKit 2.
+
 Use `@sveltejs/adapter-node` — we deploy to our own servers (see `kejser-web:deploying`).
 A static content site uses `@sveltejs/adapter-static` instead (see `kejser-web:svelte-static`).
 

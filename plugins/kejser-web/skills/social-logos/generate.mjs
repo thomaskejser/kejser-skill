@@ -13,9 +13,29 @@ const DARK_SURFACE = '#121212';
 const MIN_CONTRAST = 3;
 
 const SIMPLE_ICONS = [
-	'bluesky', 'discord', 'facebook', 'github', 'instagram', 'mastodon', 'medium', 'messenger',
-	'patreon', 'pinterest', 'reddit', 'signal', 'snapchat', 'substack', 'telegram', 'threads',
-	'tiktok', 'tumblr', 'twitch', 'vimeo', 'whatsapp', 'x', 'youtube'
+	'bluesky',
+	'discord',
+	'facebook',
+	'github',
+	'instagram',
+	'mastodon',
+	'medium',
+	'messenger',
+	'patreon',
+	'pinterest',
+	'reddit',
+	'signal',
+	'snapchat',
+	'substack',
+	'telegram',
+	'threads',
+	'tiktok',
+	'tumblr',
+	'twitch',
+	'vimeo',
+	'whatsapp',
+	'x',
+	'youtube'
 ];
 
 const FONT_AWESOME = {
@@ -114,7 +134,8 @@ for (const logo of logos) {
 
 const entries = logos
 	.map((l) => {
-		const attribution = l.licence === 'CC-BY-4.0' ? `\t// ${l.source}, https://fontawesome.com, CC BY 4.0\n` : '';
+		const attribution =
+			l.licence === 'CC-BY-4.0' ? `\t// ${l.source}, https://fontawesome.com, CC BY 4.0\n` : '';
 		return `${attribution}\t${JSON.stringify(l.slug)}: { title: ${JSON.stringify(l.title)}, path: ${JSON.stringify(l.path)}, transform: ${JSON.stringify(l.transform)} }`;
 	})
 	.join(',\n');
@@ -124,7 +145,10 @@ writeFileSync(
 );
 
 const tones = logos
-	.map((l) => `\t.social-logo[data-tone="brand"][data-brand="${l.slug}"] {\n\t\tcolor: light-dark(${l.light}, ${l.dark});\n\t}`)
+	.map(
+		(l) =>
+			`\t.social-logo[data-tone="brand"][data-brand="${l.slug}"] {\n\t\tcolor: light-dark(${l.light}, ${l.dark});\n\t}`
+	)
 	.join('\n\n');
 writeFileSync(
 	'svelte/social-logos.css',
@@ -132,7 +156,10 @@ writeFileSync(
 );
 
 const rows = logos
-	.map((l) => `| \`${l.slug}\` | ${l.title} | \`${l.hex}\` | \`${l.light}\` | \`${l.dark}\` | ${l.source} | ${l.licence} | ${l.guidelines ? `[guidelines](${l.guidelines})` : 'none published'} |`)
+	.map(
+		(l) =>
+			`| \`${l.slug}\` | ${l.title} | \`${l.hex}\` | \`${l.light}\` | \`${l.dark}\` | ${l.source} | ${l.licence} | ${l.guidelines ? `[guidelines](${l.guidelines})` : 'none published'} |`
+	)
 	.join('\n');
 writeFileSync(
 	'sources.md',

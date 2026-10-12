@@ -42,7 +42,7 @@ Never draw a platform logo by hand or fetch one from a random site; use these.
   <SocialLogo brand="instagram" tone="brand" />
   ```
 
-- SvelteKit 2 projects import from `$lib/` instead of `#lib/`.
+- SvelteKit 2 projects import from `$lib/` instead (see `kejser-web:sveltekit`).
 - `brand` is typed, so an unknown brand fails `svelte-check`.
 - `tone="inherit"` (the default) draws the logo in the surrounding text colour, so it follows every theme.
 - `tone="brand"` draws it in the brand colour, switching between the light and dark values with the page's `color-scheme`.

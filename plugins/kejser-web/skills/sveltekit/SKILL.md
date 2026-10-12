@@ -1,6 +1,6 @@
 ---
 name: sveltekit
-description: Conventions for writing SvelteKit (Svelte 5) code — component structure, routing, data loading, and the rule that every UX control must be a component. Use whenever creating or editing .svelte files, routes, load functions, or SvelteKit project structure.
+description: Conventions for writing SvelteKit (Svelte 5) code — component structure, routing, data loading, the rule that every UX control must be a component, and what changed in SvelteKit 3 (#lib instead of $lib, config in vite.config.ts, $app/env). Use whenever creating or editing .svelte files, routes, load functions, or SvelteKit project structure.
 ---
 
 # SvelteKit conventions
@@ -92,7 +92,7 @@ Use runes everywhere; do not mix in Svelte 4 idioms.
 SQL lives in standalone `.sql` files (e.g. `src/lib/server/sql/`), imported with Vite's `?raw` suffix and executed as raw SQL with named parameters bound by the driver — never as template strings inlined in TypeScript, and no ORM or query builder. See `kejser-code:database`.
 
 ```ts
-import topEngines from '$lib/server/sql/top-engines.sql?raw';
+import topEngines from '#lib/server/sql/top-engines.sql?raw';
 ```
 
 ## Project layout
@@ -108,7 +108,23 @@ src/
   app.html
 ```
 
-Import through the configured aliases (`#lib/...` or `$lib/...` as the project defines) rather than long relative paths.
+Import through `#lib/...` (`$lib/...` in SvelteKit 2) rather than long relative paths.
+
+## SvelteKit 3
+
+New projects scaffold SvelteKit 3.
+Where it differs from SvelteKit 2:
+
+| Concern | SvelteKit 3 | SvelteKit 2 |
+|---|---|---|
+| Config | `sveltekit({...})` in `vite.config.ts` | `kit` in `svelte.config.js`, which SvelteKit 3 refuses to start with |
+| `src/lib` | `#lib/...`, from `"imports"` in `package.json` | `$lib/...` |
+| Other import aliases | Entries in `package.json` `"imports"`, e.g. `"#components/*": "./src/components/*"` | `kit.alias` |
+| Environment variables | Declared in `src/env.ts` with `defineEnvVars`, imported from `$app/env/private` or `$app/env/public` | `$env/static/private`, `$env/dynamic/private` and the `public` pair |
+| `browser`, `dev`, `building` | `$app/env` | `$app/environment` |
+
+- `$lib` is removed, and the `alias` option is deprecated; don't add `alias: { $lib: ... }` back to keep old imports working.
+- An existing SvelteKit 2 project stays on 2 and keeps its `$lib` imports until Thomas asks to migrate.
 
 ## Accessibility
 

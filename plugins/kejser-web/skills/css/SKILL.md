@@ -83,7 +83,9 @@ Pick selectors in this order of preference:
 - Import it once, in the root `+layout.svelte`.
 - In a single-app project the sheets live in `src/lib/styles/`, with the entry file `app.css`.
 - When several apps in one repo share a design, the sheets live in a root `style/` folder.
-  Each app aliases it as `$style` in `vite.config.ts` and imports `$style/<entry>.css`.
+  Each app maps it as `#style` in its `package.json` `"imports"` (`"#style/*": "../style/*"`) and imports `#style/<entry>.css`.
+  Vite accepts an import target outside the package; Node doesn't, which is fine for files only Vite loads.
+  SvelteKit 2 apps alias it as `$style` with `kit.alias` instead.
 - `@layer` ordering replaces specificity fights; `!important` is only for reset idioms such as `[hidden]` and reduced motion.
 
 ## Tokens

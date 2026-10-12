@@ -3,10 +3,12 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"generate": "node generate.mjs"
+		"generate": "node generate.mjs && prettier --write generate.mjs svelte"
 	},
 	"devDependencies": {
 		"@fortawesome/free-brands-svg-icons": "7.3.1",
+		"prettier": "3.8.3",
+		"prettier-plugin-svelte": "4.1.0",
 		"simple-icons": "16.33.0"
 	}
 }

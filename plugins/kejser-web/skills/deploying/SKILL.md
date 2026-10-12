@@ -42,7 +42,7 @@ A build that fails `check`, `lint`, or `test` does not ship.
 
 ## Rules that hold regardless
 
-- Secrets never enter the repo, the build output, or a `PUBLIC_*` variable. Only `$env/static/private` and `$env/dynamic/private`, imported from server-only code.
+- Secrets never enter the repo, the build output, or a public variable. Server-only code reads them from `$app/env/private`, declared in `src/env.ts` (`$env/static/private` and `$env/dynamic/private` in SvelteKit 2).
 - Deploy from a clean, tagged commit — never from a dirty working tree or local build.
 - Staging first, then production, unless explicitly told otherwise.
 - Confirm before touching production, and confirm before anything destructive (migrations, data backfills, config rewrites).
