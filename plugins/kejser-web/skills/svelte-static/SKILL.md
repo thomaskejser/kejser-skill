@@ -45,9 +45,35 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
   A page that genuinely needs interactivity sets `export const csr = true;` in its own `+page.ts`.
 - `load` functions in `+page.server.ts` run at build time, so they read content from disk with `node:fs`.
 - Every dynamic route (`[post]`, `[tag]`, `[page]`) exports `entries()` listing every value it renders.
-- `svelte.config.js` sets `kit.prerender.entries: ['*', '/sitemap.xml']`.
-- A broken internal link or an unrendered route fails the build.
-  Never override `handleHttpError` or `handleUnseenRoutes` to log instead of throw.
+
+### Broken links fail the build
+
+- A link to a missing page, a link to a missing `#anchor`, and a route nothing prerendered each fail the build.
+- The prerender handlers throw with the path and the page that links to it:
+
+  ```ts
+  // vite.config.ts
+  sveltekit({
+  	adapter: adapter(),
+  	prerender: {
+  		entries: ['*', '/sitemap.xml'],
+  		handleHttpError: ({ status, path, referrer, referenceType }) => {
+  			throw new Error(`${status} ${path} (${referenceType} from ${referrer ?? 'entries'})`);
+  		},
+  		handleMissingId: ({ path, id, referrers }) => {
+  			throw new Error(`${path}#${id} has no element with that id (linked from ${referrers.join(', ')})`);
+  		},
+  		handleUnseenRoutes: ({ routes }) => {
+  			throw new Error(`routes never prerendered:\n${routes.join('\n')}`);
+  		}
+  	}
+  })
+  ```
+
+- A handler never only logs, and never ignores a status.
+  Fix the link or add the page instead.
+- SvelteKit 3 reads these options from `sveltekit({...})` in `vite.config.ts`.
+  SvelteKit 2 projects put the same `prerender` block under `kit` in `svelte.config.js`.
 
 ## Content collections
 
@@ -91,7 +117,14 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 - Every page sets `<title>`, `<meta name="description">` and an absolute `<link rel="canonical">` built from `config.url`.
 - Posts add Open Graph and Twitter card tags, `article:published_time`, `article:tag`, and a `BlogPosting` JSON-LD block.
 - `src/routes/sitemap.xml/+server.ts` is prerendered and lists every canonical URL.
-- `static/robots.txt` allows crawling and points to the sitemap.
+- `static/robots.txt` always points to the sitemap with an absolute URL:
+
+  ```text
+  User-agent: *
+  Disallow:
+
+  Sitemap: https://www.example.com/sitemap.xml
+  ```
 
 ## Images and static files
 
@@ -119,9 +152,9 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 ## Review checklist
 
 1. adapter-static, with `prerender = true` and `csr = false` at the root.
-2. Every dynamic route has `entries()`; the build fails on broken links.
+2. Every dynamic route has `entries()`; the prerender handlers throw, so broken links and anchors fail the build.
 3. Content parsing lives in one server module; routes don't parse Markdown.
 4. Code highlighting happens at build time.
-5. Canonical URL, description and title on every page; sitemap complete.
+5. Canonical URL, description and title on every page; sitemap complete, and `robots.txt` points to it.
 6. Styling follows `kejser-web:css`.
 7. No secrets in `config.json` or `static/`.
