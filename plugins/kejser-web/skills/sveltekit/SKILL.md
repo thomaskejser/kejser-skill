@@ -61,6 +61,7 @@ Why: one place to fix accessibility, one place to change behaviour, and the glob
 - Components accept content via snippets (`children`, named snippets) rather than hardcoding text.
 - Components are presentation-first: they take data and callbacks as props and do not reach into stores, `$app/state`, or fetch data themselves unless that is their explicit job.
 - Never add a `<style>` block to a component. Styling comes from the global stylesheets — see the `css` skill.
+- Components only display. Work that needs Node or heavy libraries (reading files, rendering Markdown, highlighting code) happens in a server `load` function, and the component takes the result as a prop. A component can't be server-only, so anything it imports may ship to the browser. Markdown is the example: `markdown.ts` renders it and `Prose.svelte` shows it (see `kejser-web:svelte-static`).
 
 ## Svelte 5 runes
 
@@ -118,11 +119,12 @@ Where it differs from SvelteKit 2:
 | Concern | SvelteKit 3 | SvelteKit 2 |
 |---|---|---|
 | Config | `sveltekit({...})` in `vite.config.ts` | `kit` in `svelte.config.js`, which SvelteKit 3 refuses to start with |
-| `src/lib` | `#lib/...`, from `"imports"` in `package.json` | `$lib/...` |
+| `src/lib` | `#lib/...` with the file's extension (`#lib/server/db.ts`), from `"imports"` in `package.json` | `$lib/...` |
 | Other import aliases | Entries in `package.json` `"imports"`, e.g. `"#components/*": "./src/components/*"` | `kit.alias` |
 | Environment variables | Declared in `src/env.ts` with `defineEnvVars`, imported from `$app/env/private` or `$app/env/public` | `$env/static/private`, `$env/dynamic/private` and the `public` pair |
 | `browser`, `dev`, `building` | `$app/env` | `$app/environment` |
 
+- `#lib/server/db` without `.ts` builds, but `svelte-check` can't resolve it; always write the extension.
 - `$lib` is removed, and the `alias` option is deprecated; don't add `alias: { $lib: ... }` back to keep old imports working.
 - An existing SvelteKit 2 project stays on 2 and keeps its `$lib` imports until Thomas asks to migrate.
 

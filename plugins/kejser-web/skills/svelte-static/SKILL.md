@@ -1,6 +1,6 @@
 ---
 name: svelte-static
-description: How we build static SvelteKit sites (blogs, docs, content and marketing sites) — adapter-static, every page prerendered with no client JavaScript by default, Markdown content collections rendered at build time, build-time code highlighting, SEO metadata and sitemap, and publishing to cPanel. Use whenever creating, scaffolding or extending a static or prerendered Svelte site, adding content collections, posts, pages, tags or pagination, or setting up SEO for one.
+description: How we build static SvelteKit sites (blogs, docs, content and marketing sites) — adapter-static, every page prerendered with no client JavaScript by default, Markdown content collections (the src/content layout, front matter, links, images) rendered at build time by a ready-made markdown.ts and Prose component, build-time code highlighting, SEO metadata and sitemap, and publishing to cPanel. Use whenever creating, scaffolding or extending a static or prerendered Svelte site, adding content collections, posts, pages, tags or pagination, rendering Markdown files to HTML, or setting up SEO for one.
 ---
 
 # Static Svelte sites
@@ -29,7 +29,7 @@ Its stylesheets do not follow `kejser-web:css`; the skill wins.
 ```sh
 npx sv create <dir> --template minimal --types ts
 npx sv add sveltekit-adapter="adapter:static" prettier eslint
-npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
+npm i -D gray-matter marked marked-gfm-heading-id marked-shiki shiki
 ```
 
 ## Rendering
@@ -77,29 +77,121 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 - SvelteKit 3 reads these options from `sveltekit({...})` in `vite.config.ts`.
   SvelteKit 2 projects put the same `prerender` block under `kit` in `svelte.config.js`.
 
-## Content collections
+## Content
 
-- Content lives in `src/content/<collection>/<slug>.md`, e.g. `src/content/posts/` and `src/content/pages/`.
-- The file name is the slug, and the URL is `/<collection>/<slug>`.
-- Front matter holds only what the text can't: `date` (ISO `YYYY-MM-DD`) and `tags`.
-- The title is the file's single `#` heading; it is never repeated in front matter.
+### Layout
+
+```text
+src/
+  content/
+    pages/                  # single pages: /about, /sources
+      about.md
+    posts/                  # one folder per collection: /posts/<slug>
+      first-post.md
+      second-post.md
+  lib/
+    components/
+      Prose.svelte          # copied from this skill
+    server/
+      markdown.ts           # copied from this skill
+      pages.ts              # one module per collection: its front matter schema
+      posts.ts
+  routes/
+    [slug]/+page.server.ts  # pages/<slug>.md, or one route per page: about/+page.server.ts
+    posts/[post]/+page.server.ts
+static/
+  img/
+    cover/first-post.webp
+    posts/first-post/plan.webp
+```
+
+- Content lives in `src/content/`, never in a top-level `content/`.
+  Everything the build reads lives under `src/`, as in database-doctor.
+- Each folder in `src/content/` is a collection, and each collection maps to one route: `posts/<slug>.md` is `/posts/<slug>`.
+- Single pages (about, sources, privacy) are the collection `pages/`, mapped to `/<slug>`.
+- The file name is the slug: lowercase kebab-case, or the build fails.
+- There are no drafts and no `drafts/` folder; Thomas decides which articles exist, and every file in a collection is published.
 - Content files follow the one-sentence-per-line and heading rules of `kejser-code:markdown`.
   Articles are prose; the bullets-over-prose rule is for repo docs.
-- Links between content files are written as relative `.md` paths, so they also work on GitHub.
-  The renderer strips the `.md` extension.
-- One server-only module (`src/lib/server/content.ts`) reads, parses and sorts a collection.
-  Routes call it; they never parse Markdown themselves.
+
+### Front matter and titles
+
+- Front matter holds only what the text can't, such as `date` (ISO `YYYY-MM-DD`) and `tags` on posts.
+- Each collection defines its own fields in its server module, `#lib/server/<collection>.ts`.
+  That module loads files with `loadMarkdown`, checks the fields, and returns typed objects.
+- A missing required field, a wrong type, or a field the collection doesn't define fails the build.
+- The title is the file's single `#` heading.
+  A collection whose files have no heading uses a field instead, such as `question` for an FAQ.
+  Never both: a file with a `#` heading has no `title` field.
+
+### Links
+
+- Links between content files are relative `.md` paths, so they also work on GitHub and in editors: `[the plan](../posts/first-post.md#the-plan)`.
+- `markdown.ts` turns them into site paths (`/posts/first-post#the-plan`).
+  It fails the build on a relative link to anything but a `.md` file, or one that leaves `src/content/`.
+- Links to routes that aren't content files, such as `/tags/sql`, are site paths.
+- The prerender crawler then follows every link, so a missing page or `#anchor` fails the build (see [Broken links fail the build](#broken-links-fail-the-build)).
+
+### Images
+
+- Images used by content live in `static/img/<collection>/<slug>/`, and covers in `static/img/cover/<slug>.webp`.
+- Content refers to them by site path: `![The plan](/img/posts/first-post/plan.webp)`.
+- `markdown.ts` fails the build on an image path that isn't in `static/`, and on a relative image path.
 
 ### Rendering Markdown
 
-- Parse front matter with `gray-matter` and render with `marked`.
-- `marked-gfm-heading-id` gives headings stable anchor ids.
-- Highlight code at build time with `shiki` through `marked-shiki`.
-  No highlighter ships to the browser.
-- Create the shiki highlighter once and reuse it across pages.
-- Derived values (summary, meta description, reading time) come from walking the `marked` token tree, not from regexes over the text.
-- Render the HTML with `{@html}` inside an `<article>`.
-  The content is ours and built at build time, so it is trusted.
+Two files in this skill's folder do the work, copied into the project unchanged:
+
+| File | Copy to | Does |
+|---|---|---|
+| [`markdown.ts`](markdown.ts) | `src/lib/server/markdown.ts` | Reads a content file, parses its front matter, renders its HTML at build time. |
+| [`Prose.svelte`](Prose.svelte) | `src/lib/components/Prose.svelte` | Displays rendered HTML as `<article class="prose">`. |
+
+```ts
+// src/routes/about/+page.server.ts
+import { loadMarkdown } from '#lib/server/markdown.ts';
+
+export async function load() {
+	const { title, html } = await loadMarkdown('pages/about');
+	return { title, html };
+}
+```
+
+```svelte
+<!-- src/routes/about/+page.svelte -->
+<script lang="ts">
+	import Prose from '#lib/components/Prose.svelte';
+
+	let { data } = $props();
+</script>
+
+<svelte:head><title>{data.title}</title></svelte:head>
+<Prose html={data.html} />
+```
+
+- `loadMarkdown(name, options?)` reads `src/content/<name>.md` and returns `{ name, slug, frontMatter, title, html, tokens }`.
+  A missing file is a 404, so a broken link fails the build naming the page that links to it.
+- `listMarkdown(collection)` returns every content path in a collection, for `entries()` and index pages.
+- `renderMarkdown(name, source)` renders text already in hand, such as an `import.meta.glob` `?raw` import.
+- It renders with `marked`, gives headings anchor ids with `marked-gfm-heading-id`, and highlights code with Shiki through `marked-shiki`.
+  One Shiki highlighter is shared by every page, and loads each language on first use.
+- Code colours follow the page's `color-scheme` through `light-dark()`; `themes` picks the pair, GitHub light and dark by default.
+- A fence with an unknown language, an empty body, or more than one `#` heading fails the build.
+- Options cover what differs between sites:
+  - `extensions`: extra `marked` extensions, such as stripping links from a summary.
+  - `languages`: custom TextMate grammars, such as database-doctor's query-plan grammar.
+  - `languageAliases`: fence names mapped to a language, e.g. `{ postgres: 'sql' }`.
+  - `stripTitle`: leave the `#` heading out of `html` when the layout renders `title` itself.
+  - `urlFor`: a different content-path-to-URL mapping.
+- Derived values (summary, meta description, reading time) come from walking `tokens`, not from regexes over the text.
+- `Prose` styling lives in the `kejser-web:css` sheets: flow spacing for `.prose > * + *` in `layout.css`, and prose type in `text.css`.
+
+#### Why `Prose` doesn't convert the Markdown itself
+
+- A Svelte component can't be server-only.
+  On any page with client rendering, `marked`, Shiki and the content would ship to the browser.
+- The page needs the front matter too, so its `load` function reads the file anyway.
+- Checks across files, such as broken links and links between parent and child pages, need all rendered HTML in one server module.
 
 ### Lists, tags and pagination
 
@@ -133,7 +225,7 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 - Files under `static/` are copied to the site root unchanged.
 - Images are WebP.
   A `prebuild` step converts other formats with ImageMagick (`magick`).
-- Cover images live at `static/img/cover/<slug>.webp`.
+- Content images live under `static/img/` (see [Images](#images)).
 - Every `<img>` has a meaningful `alt`, or `alt=""` when decorative.
 
 ## Build
@@ -156,7 +248,7 @@ npm i gray-matter marked marked-gfm-heading-id marked-shiki shiki
 
 1. adapter-static, with `prerender = true` and `csr = false` at the root.
 2. Every dynamic route has `entries()`; the prerender handlers throw, so broken links and anchors fail the build.
-3. Content parsing lives in one server module; routes don't parse Markdown.
+3. Markdown goes through the skill's `markdown.ts`, from one server module per collection, and is shown with `Prose`; routes don't parse Markdown.
 4. Code highlighting happens at build time.
 5. Canonical URL, description and title on every page; sitemap complete, and `robots.txt` points to it.
 6. Styling follows `kejser-web:css`.
