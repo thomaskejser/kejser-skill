@@ -56,7 +56,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `database` | *Partly placeholder.* SQLite for OLTP, DuckDB for analytics; singular snake_case tables; surrogate integer `<table>_id` keys, natural keys as unique indexes; display-name column named after the table; only `BIGINT`/`DOUBLE`/`DECIMAL`/`TEXT`; avoid NULL (`9999-12-31` for open-ended dates); apps run raw SQL from `.sql` files with bound parameters. Migrations and more are TBD. |
 | `markdown` | Every `.md` file: one sentence per line, intent in bullets rather than prose, a single `#` title. |
 | `skill-updates` | Only the running session named `Skills` changes this repo; other agents message it, or ask Thomas to start it. |
-| `collaboration` | Explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
+| `collaboration` | Pull and rebase at session start and after idling, explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
 
 Once installed, skills are referenced as `/<plugin>:<skill>`, e.g. `/kejser-web:css`, `/kejser-code:cpp`.
 

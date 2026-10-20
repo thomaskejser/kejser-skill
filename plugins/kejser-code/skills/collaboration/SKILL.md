@@ -1,9 +1,23 @@
 ---
 name: collaboration
-description: How Thomas wants agents to work alongside him and other agents — staging and committing in shared trees, commit authorship trailers, shared dev servers, reporting findings honestly, and handling credentials and production systems. Use before any git commit, when several agents share a working tree, when reporting results or handing off work, and when touching credentials, clusters, or production.
+description: How Thomas wants agents to work alongside him and other agents — pulling and rebasing at session start and after idling, staging and committing in shared trees, commit authorship trailers, shared dev servers, reporting findings honestly, and handling credentials and production systems. Use at the start of every session, when resuming after a pause, before any git commit, when several agents share a working tree, when reporting results or handing off work, and when touching credentials, clusters, or production.
 ---
 
 # Collaboration
+
+## Staying current
+
+- When a session starts, and when it resumes after being idle for 30 minutes or more, pull and rebase the repo it is working in:
+
+  ```sh
+  git pull --rebase
+  ```
+
+- With uncommitted changes in the tree:
+  - if they are all yours, use `git pull --rebase --autostash`;
+  - if any came from Thomas or another session, never stash them: run `git fetch` instead and say how far behind the branch is.
+- On a conflict, run `git rebase --abort` and report the conflicting files; don't resolve someone else's changes.
+- A branch with no upstream, or a pull that fails on authentication, is reported, not worked around.
 
 ## Committing
 
