@@ -1,6 +1,6 @@
 ---
 name: rust
-description: Thomas's Rust conventions. PLACEHOLDER: settled so far are fully self-contained binaries (static linking, musl on Linux, static CRT on Windows, bundled C libraries, rustls, assets compiled in) and the windows crate for every Windows API call; the rest is TBD. Use whenever writing, editing, reviewing or building Rust code, Cargo.toml or .cargo/config.toml, or calling Windows APIs from Rust.
+description: Thomas's Rust conventions. PLACEHOLDER: settled so far are fully self-contained binaries (static linking, musl on Linux, static CRT on Windows, bundled C libraries, rustls, assets compiled in) and Microsoft's windows or windows-sys crates for every Windows API call; the rest is TBD. Use whenever writing, editing, reviewing or building Rust code, Cargo.toml or .cargo/config.toml, or calling Windows APIs from Rust.
 ---
 
 # Rust conventions
@@ -47,8 +47,10 @@ No installer, no runtime to install first, no `.dll`, `.so` or `.dylib` shipped 
 
 ## Windows
 
-- Every Windows API call goes through Microsoft's [`windows`](https://crates.io/crates/windows) crate.
-  Never `winapi` (unmaintained), `windows-sys`, or hand-written `extern "system"` blocks.
+- Every Windows API call goes through Microsoft's own bindings:
+  - [`windows`](https://crates.io/crates/windows) by default, and always for COM and WinRT; it wraps results in `windows::core::Result`.
+  - [`windows-sys`](https://crates.io/crates/windows-sys) for plain Win32 C functions when the crate needs nothing more; it is raw `unsafe` bindings that compile faster.
+- Never `winapi` (unmaintained) or hand-written `extern "system"` blocks.
 - Enable only the API namespaces the code uses:
 
   ```toml
