@@ -36,8 +36,8 @@ export interface MarkdownDocument {
 	slug: string;
 	/** Raw front matter; each collection module validates its own fields. */
 	frontMatter: Record<string, unknown>;
-	/** Text of the single `#` heading, if the file has one. */
-	title: string | undefined;
+	/** Text of the file's one `#` heading. */
+	title: string;
 	html: string;
 	/** `marked` tokens of the body, for summaries, reading time and the like. */
 	tokens: Token[];
@@ -93,16 +93,17 @@ export async function renderMarkdown(
 	const titles = tokens.filter(
 		(token): token is Tokens.Heading => token.type === 'heading' && token.depth === 1
 	);
-	if (titles.length > 1) {
-		throw new Error(`${name}.md: has ${titles.length} # headings; a file has at most one`);
+	if (titles.length !== 1) {
+		throw new Error(`${name}.md: has ${titles.length} # headings; the title is exactly one`);
 	}
-	const body = options.stripTitle ? content.replace(titles[0]?.raw ?? '', '') : content;
+	const [title] = titles;
+	const body = options.stripTitle ? content.replace(title.raw, '') : content;
 
 	return {
 		name,
 		slug,
 		frontMatter: data,
-		title: titles[0]?.text,
+		title: title.text,
 		html: await marked.parse(body, { async: true }),
 		tokens
 	};

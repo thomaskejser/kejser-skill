@@ -29,7 +29,7 @@ Its stylesheets do not follow `kejser-web:css`; the skill wins.
 ```sh
 npx sv create <dir> --template minimal --types ts
 npx sv add sveltekit-adapter="adapter:static" prettier eslint
-npm i -D gray-matter marked marked-gfm-heading-id marked-shiki shiki
+npm i -D gray-matter marked marked-gfm-heading-id marked-shiki shiki @types/node
 ```
 
 ## Rendering
@@ -120,9 +120,9 @@ static/
 - Each collection defines its own fields in its server module, `#lib/server/<collection>.ts`.
   That module loads files with `loadMarkdown`, checks the fields, and returns typed objects.
 - A missing required field, a wrong type, or a field the collection doesn't define fails the build.
-- The title is the file's single `#` heading.
-  A collection whose files have no heading uses a field instead, such as `question` for an FAQ.
-  Never both: a file with a `#` heading has no `title` field.
+- The title is always the file's one `#` heading, in every collection; an FAQ's question is its `#` heading too.
+  A file with no `#` heading, or more than one, fails the build.
+- The title is never in front matter: no `title`, `question` or similar field.
 
 ### Links
 
@@ -176,7 +176,7 @@ export async function load() {
 - It renders with `marked`, gives headings anchor ids with `marked-gfm-heading-id`, and highlights code with Shiki through `marked-shiki`.
   One Shiki highlighter is shared by every page, and loads each language on first use.
 - Code colours follow the page's `color-scheme` through `light-dark()`; `themes` picks the pair, GitHub light and dark by default.
-- A fence with an unknown language, an empty body, or more than one `#` heading fails the build.
+- A fence with an unknown language, an empty body, or anything but exactly one `#` heading fails the build.
 - Options cover what differs between sites:
   - `extensions`: extra `marked` extensions, such as stripping links from a summary.
   - `languages`: custom TextMate grammars, such as database-doctor's query-plan grammar.
