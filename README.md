@@ -46,7 +46,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 
 | Skill | Covers |
 |---|---|
-| `language-choice` | Which language for which work: Rust for self-contained binaries, TypeScript/SvelteKit for the web, SQL for database logic (stored procedures only to cut round trips or for complex transactions), Python only for instrumentation and ETL glue, ETL as Python running SQL in DuckDB. Never an ORM; never dbt, Airflow or other ETL tools. |
+| `language-choice` | Which language for which work: C++ only after asking Thomas, Rust for self-contained binaries, TypeScript/SvelteKit for the web, SQL for database logic (stored procedures only to cut round trips or for complex transactions), Python only for instrumentation and ETL glue, ETL as Python running SQL in DuckDB. Never an ORM; never dbt, Airflow or other ETL tools. |
 | `code-style` | Any language. Comments default to none (contract only, rationale in `docs/`), guard clauses, fail loudly, no silently-ignored input, testing and verification. |
 | `cpp` | Modern C++: smart pointers, `optional`/`expected`, RAII, `const` everywhere, free functions, no `using namespace`, braces always, CLI11, vcpkg manifest mode, Makefile over raw CMake. |
 | `rust` | *Placeholder.* Fully self-contained binaries (musl on Linux, static CRT on Windows, bundled C libraries, rustls, assets compiled in); Windows APIs only through Microsoft's `windows` or `windows-sys` crates. The rest is TBD. |

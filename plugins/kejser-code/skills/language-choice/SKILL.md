@@ -1,6 +1,6 @@
 ---
 name: language-choice
-description: Which language and framework to use for each kind of work in Thomas's projects — Rust for self-contained binaries, TypeScript and SvelteKit for the web, SQL for all database logic (stored procedures only to cut round trips or for complex transactions), Python only for instrumentation and ETL glue, ETL as Python scripts running SQL in DuckDB. Never an ORM; never dbt, Airflow or any other ETL tool. Use whenever starting a project, tool, script or component, choosing a language, framework or library for it, adding a data access layer, or building a data pipeline.
+description: Which language and framework to use for each kind of work in Thomas's projects — Rust for self-contained binaries, TypeScript and SvelteKit for the web, SQL for all database logic (stored procedures only to cut round trips or for complex transactions), Python only for instrumentation and ETL glue, ETL as Python scripts running SQL in DuckDB, C++ only after asking Thomas. Never an ORM; never dbt, Airflow or any other ETL tool. Use whenever starting a project, tool, script or component, choosing a language, framework or library for it, adding a data access layer, or building a data pipeline.
 ---
 
 # Language choice
@@ -18,9 +18,15 @@ Each row's skill holds the conventions for that language.
 | Database logic: queries, transformations, business rules over data | SQL | `kejser-code:database`, `kejser-code:sql-design` |
 | ETL | Python scripts running SQL, with DuckDB as the engine | `kejser-code:etl` |
 | Instrumentation: measuring, benchmark harnesses, collecting and reporting metrics | Python | — |
-| Code inside a C++ system, such as a DuckDB extension | C++ | `kejser-code:cpp` |
+| Code inside a C++ system, such as a DuckDB extension | C++, only after Thomas says yes | `kejser-code:cpp` |
 
 - A repo that already exists keeps its languages; don't rewrite working code in another language to match this table.
+
+## C++ only with Thomas's OK
+
+- Before writing new C++, ask Thomas, and wait for a yes.
+- Ask even when C++ looks like the obvious fit, such as a DuckDB extension.
+- Editing a repo that is already C++ needs no new OK.
 
 ## Rust for self-contained binaries
 

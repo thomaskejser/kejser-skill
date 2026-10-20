@@ -5,6 +5,8 @@ description: Thomas's modern C++ conventions — ownership with smart pointers, 
 
 # C++ conventions
 
+> **Ask first.** New C++ is written only after Thomas says yes (see `kejser-code:language-choice`); editing a repo that is already C++ needs no new OK.
+
 Modern C++ in the Jason Turner style. Builds on `kejser-code:code-style`. A repo's formatter config (`.clang-format`, `make format`) decides layout — run it, don't hand-format.
 
 ## Language standard
