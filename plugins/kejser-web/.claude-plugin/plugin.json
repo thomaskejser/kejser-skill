@@ -1,7 +1,7 @@
 {
 	"name": "kejser-web",
 	"description": "SvelteKit stack and conventions: default stack and scaffolding, every UX control is a component, semantic CSS with no Tailwind, adapter-node deploys, static content sites, publishing them to cPanel over FTPS, and SVG social media logos.",
-	"version": "0.10.1",
+	"version": "0.10.2",
 	"author": {
 		"name": "Thomas Kejser",
 		"email": "thomas@kejser.org"

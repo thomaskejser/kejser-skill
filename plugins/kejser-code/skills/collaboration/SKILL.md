@@ -35,6 +35,7 @@ When several agents work in one tree:
 ## Credentials and production
 
 - Never print, persist, or echo credentials (tokens, PATs, JWTs, kubeconfigs). Refer to where they live.
+  The one exception: when Thomas asks, an agent stores a value as an environment variable as `kejser-code:environment-variables` describes.
 - Default to read-only commands unless a change is explicitly requested. Confirm the active context (kube context, account, cluster) first; never substitute a different one, and don't start an interactive SSO login on your own.
 - Keep downloaded logs and captures outside the repo, and delete them when done.
 - Time-bound every query or scan against a live system.

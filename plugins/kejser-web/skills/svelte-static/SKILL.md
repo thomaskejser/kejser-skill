@@ -19,7 +19,8 @@ Its stylesheets do not follow `kejser-web:css`; the skill wins.
 | `kejser-web:web-stack` | Stack, tooling, scaffolding and the dev-server loop. |
 | `kejser-web:sveltekit` | Components, runes, naming, no wrapper `<div>`s. |
 | `kejser-web:css` | All styling: global sheets, tokens, no `<style>` blocks. |
-| `kejser-web:cpanel` | Publishing the build to cPanel over FTPS. |
+| `kejser-web:cpanel` | Publishing the build to cPanel over FTPS; cPanel is the preferred host for static sites. |
+| `kejser-code:environment-variables` | Naming and storing deploy credentials. |
 | `kejser-code:code-style` | Comments, errors, tests. |
 | `kejser-code:markdown` | Repo docs, and the line and heading rules for content files. |
 | `kejser-code:collaboration` | Shared trees, commits, credentials. |
