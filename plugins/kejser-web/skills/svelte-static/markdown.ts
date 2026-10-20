@@ -1,9 +1,9 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, posix } from 'node:path';
 import { error } from '@sveltejs/kit';
+import GithubSlugger from 'github-slugger';
 import matter from 'gray-matter';
 import { Marked, type MarkedExtension, type Token, type Tokens } from 'marked';
-import { gfmHeadingId } from 'marked-gfm-heading-id';
 import markedShiki from 'marked-shiki';
 import {
 	bundledLanguages,
@@ -84,7 +84,7 @@ export async function renderMarkdown(
 	}
 
 	const marked = new Marked(
-		gfmHeadingId(),
+		headingIds(),
 		markedShiki({ highlight: await highlightFor(name, options) }),
 		contentLinks(name, options.urlFor ?? defaultUrlFor),
 		...(options.extensions ?? [])
@@ -108,6 +108,31 @@ export async function renderMarkdown(
 		tokens
 	};
 }
+
+/** GitHub-style heading ids, counted per document so concurrent renders don't share a slugger. */
+function headingIds(): MarkedExtension {
+	const slugger = new GithubSlugger();
+	return {
+		renderer: {
+			heading({ tokens, depth }) {
+				const text = this.parser.parseInline(tokens);
+				const plain = text
+					.replace(/<[^>]*>/g, '')
+					.replace(/&(amp|lt|gt|quot|#39);/g, (entity) => ENTITIES[entity])
+					.trim();
+				return `<h${depth} id="${slugger.slug(plain)}">${text}</h${depth}>\n`;
+			}
+		}
+	};
+}
+
+const ENTITIES: Record<string, string> = {
+	'&amp;': '&',
+	'&lt;': '<',
+	'&gt;': '>',
+	'&quot;': '"',
+	'&#39;': "'"
+};
 
 function defaultUrlFor(name: string): string {
 	return name.startsWith('pages/') ? `/${name.slice('pages/'.length)}` : `/${name}`;

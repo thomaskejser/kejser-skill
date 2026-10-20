@@ -29,7 +29,7 @@ Its stylesheets do not follow `kejser-web:css`; the skill wins.
 ```sh
 npx sv create <dir> --template minimal --types ts
 npx sv add sveltekit-adapter="adapter:static" prettier eslint
-npm i -D gray-matter marked marked-gfm-heading-id marked-shiki shiki @types/node
+npm i -D gray-matter marked github-slugger marked-shiki shiki @types/node
 ```
 
 ## Rendering
@@ -173,7 +173,9 @@ export async function load() {
   A missing file is a 404, so a broken link fails the build naming the page that links to it.
 - `listMarkdown(collection)` returns every content path in a collection, for `entries()` and index pages.
 - `renderMarkdown(name, source)` renders text already in hand, such as an `import.meta.glob` `?raw` import.
-- It renders with `marked`, gives headings anchor ids with `marked-gfm-heading-id`, and highlights code with Shiki through `marked-shiki`.
+- It renders with `marked`, gives headings GitHub-style anchor ids with `github-slugger`, and highlights code with Shiki through `marked-shiki`.
+- Renders are safe to run concurrently: `Promise.all(listMarkdown('faq').map((name) => loadMarkdown(name)))` is fine.
+  Heading ids are counted per document; `marked-gfm-heading-id` shares one counter across documents, so it isn't used.
   One Shiki highlighter is shared by every page, and loads each language on first use.
 - Code colours follow the page's `color-scheme` through `light-dark()`; `themes` picks the pair, GitHub light and dark by default.
 - A fence with an unknown language, an empty body, or anything but exactly one `#` heading fails the build.
