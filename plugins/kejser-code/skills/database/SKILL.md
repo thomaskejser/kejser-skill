@@ -68,6 +68,10 @@ CREATE UNIQUE INDEX customer_vat_number ON customer (vat_number);
 
 Apps always execute **raw SQL read from `.sql` files** — no ORM, no query builder, no SQL assembled from strings in host-language code. To change a query, edit its `.sql` file.
 
+Never an ORM, in any language, with no exception for prototypes (see `kejser-code:language-choice`).
+Logic over data belongs in SQL rather than in host-language loops over fetched rows.
+Stored procedures, where the engine has them, are used only to cut round trips or to run a complex transaction as one unit inside the database.
+
 A file may contain parameters that are filled in at execution time. Use named placeholders written `$customer_id` — both SQLite and DuckDB accept that form — and bind values through the driver; never splice values into the SQL text.
 A parameter is always a value; it cannot supply a table or column name.
 
