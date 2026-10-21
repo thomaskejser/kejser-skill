@@ -26,6 +26,7 @@ These conventions apply when creating a **new** database. A database that alread
 - Table names are **singular**, lowercase, words joined by underscores: `customer`, `order_line`, not `Customers` or `orderLines`.
 - ID columns are named **`<table>_id`** — the primary key of `customer` is `customer_id`, and a column referencing it elsewhere is also `customer_id`. Never a bare `id`.
 - The column holding a row's **display name is named after the table**: `customer` has a column `customer` with the name shown for that customer. Never `name`, `title` or `label`.
+- A database engine's own system views and catalog columns follow the naming in `kejser-code:sql-design`.
 
 ### Keys
 

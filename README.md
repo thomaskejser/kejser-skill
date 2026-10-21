@@ -51,7 +51,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `code-style` | Any language. Comments default to none (contract only, rationale in `docs/`), guard clauses, fail loudly, no silently-ignored input, testing and verification. |
 | `cpp` | Modern C++: smart pointers, `optional`/`expected`, RAII, `const` everywhere, free functions, no `using namespace`, braces always, CLI11, vcpkg manifest mode, Makefile over raw CMake. |
 | `rust` | *Placeholder.* Fully self-contained binaries (musl on Linux, static CRT on Windows, bundled C libraries, rustls, assets compiled in); Windows APIs only through Microsoft's `windows` or `windows-sys` crates. The rest is TBD. |
-| `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax; SQL kept in `.sql` files. |
+| `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax, naming of system views and catalog columns; SQL kept in `.sql` files. |
 | `etl` | *Placeholder.* Python scripts running `.sql` files in DuckDB, no ETL tools, are settled; acquisition, provenance, staging and re-runs are TBD. |
 | `database` | *Partly placeholder.* SQLite for OLTP, DuckDB for analytics; singular snake_case tables; surrogate integer `<table>_id` keys, natural keys as unique indexes; display-name column named after the table; only `BIGINT`/`DOUBLE`/`DECIMAL`/`TEXT`; avoid NULL (`9999-12-31` for open-ended dates); apps run raw SQL from `.sql` files with bound parameters. Migrations and more are TBD. |
 | `markdown` | Every `.md` file: one sentence per line, intent in bullets rather than prose, a single `#` title. |
