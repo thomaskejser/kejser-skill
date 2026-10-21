@@ -42,6 +42,11 @@ Use only these:
 | Floating point | `DOUBLE` — never `FLOAT` or `REAL` |
 | Exact numbers (money, quantities with fixed scale) | `DECIMAL` |
 | Text | `TEXT` — never `VARCHAR(n)`, `CHAR(n)` or any length-limited string type |
+| A moment in time: events, audit times (`submit_time`, `created_time`) | `TIMESTAMPTZ`, holding UTC |
+| A wall-clock time that only means something in a place's time zone | `TIMESTAMP` |
+
+- Where the engine has `TIMESTAMPTZ`, every timestamp meant to be in UTC uses it.
+- Plain `TIMESTAMP` is only for times that depend on a time zone's context, such as when the sun rises in Estonia.
 
 ### NULL and defaults
 
@@ -86,7 +91,7 @@ WHERE customer_id = $customer_id
 ## TBD — fill in before relying on this skill
 
 - **Naming** — other column names; index naming; schema/namespace layout
-- **Types** — timestamps and time zones; booleans; enums vs lookup tables; JSON columns
+- **Types** — booleans; enums vs lookup tables; JSON columns
 - **Constraints** — check constraints; foreign keys enforced or not (SQLite needs `PRAGMA foreign_keys = ON` per connection)
 - **Warehouse modelling** — staging/`dw` layering (loading itself is in `kejser-code:etl`), star schema vs wide tables, naming of facts and dimensions
 - **Migrations** — tool, file naming, forward-only or reversible, where they run relative to the app deploy
@@ -100,6 +105,7 @@ SQLite maps declared types to storage affinities, so the type list above behaves
 
 - `BIGINT PRIMARY KEY` is **not** an alias for the rowid — only the exact spelling `INTEGER PRIMARY KEY` is. A `BIGINT` key does not auto-assign values, so the app generates them (see Keys).
 - `DECIMAL` gets NUMERIC affinity and is stored as an integer or 8-byte float — it is **not** exact. Exact money needs integer minor units or `TEXT`.
+- SQLite has no `TIMESTAMPTZ` or `TIMESTAMP` type; how to store timestamps there is not decided yet, so ask Thomas.
 - `STRICT` tables accept only `INT`, `INTEGER`, `REAL`, `TEXT`, `BLOB`, `ANY` — the type list above cannot be used in a `STRICT` table.
 
 ## Updating this skill
