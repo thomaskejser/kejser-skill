@@ -1,6 +1,6 @@
 ---
 name: css
-description: CSS conventions — semantic styling only, no Tailwind or any utility-class framework, a fixed set of global stylesheets (tokens, reset, text, table, form, navigation, layout, feedback) in cascade layers, role-named design tokens with light-dark() theming, fluid responsive layout where the page never scrolls sideways. Use whenever writing or editing CSS, styling components or pages, choosing class names, adding tokens, or setting up the styles of a new app.
+description: CSS conventions — semantic styling only, no Tailwind or any utility-class framework, a fixed set of global stylesheets (tokens, reset, text, table, form, navigation, layout, feedback) in cascade layers, role-named design tokens with light-dark() theming, single-column page content (no side panels unless Thomas asks), fluid responsive layout where the page never scrolls sideways. Use whenever writing or editing CSS, styling components or pages, choosing class names, adding tokens, or setting up the styles of a new app.
 ---
 
 # CSS conventions
@@ -109,6 +109,10 @@ Pick selectors in this order of preference:
 - A variant sets one custom property (`--tone`, `--fill`) that the base rule consumes; it never repeats a block.
 
 ## Layout and spacing
+
+- A page's content is one column: its sections stack top to bottom (for example a group list, then search, then results).
+  Never split the content area into main content plus a side panel or `aside` column unless Thomas asks for it.
+  The app's navigation bar beside the content is fine.
 
 - Containers space their children with `> * + * { margin-block-start: var(--flow, var(--space-md)); }`.
   Children never set their own outer margins.
