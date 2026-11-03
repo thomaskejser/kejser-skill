@@ -1,6 +1,6 @@
 ---
 name: code-style
-description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, minimal local changes, and how to test and verify. Use whenever writing, editing, or reviewing code in any language, writing code comments, or deciding where design rationale goes.
+description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, minimal local changes, how to test and verify, and revisiting changed code against the rules after every feature or rework. Use whenever writing, editing, or reviewing code in any language, writing code comments, deciding where design rationale goes, or finishing a feature or rework.
 ---
 
 # Code style
@@ -61,6 +61,16 @@ They never tell the story of how it got here.
 - Beware tests that pass by not running — "no tests ran" often exits 0; a stale server can answer on the port you meant to test. Check that what you think ran actually ran.
 - Measure instead of assuming; read the value back.
 - Don't disable build or compilation caches to "be safe".
+
+## Review after a feature
+
+After finishing a new feature or reworking one, go back over every file the work changed and bring it in line with Thomas's coding rules.
+
+- Check the changed code against each skill that applies: this one, the language skill, and any others such as `kejser-web:css` or `kejser-code:ux-design`.
+- Do this on your own initiative, before reporting the work as done.
+- If the review can't happen now, for example because the cleanup would be large or touches code others depend on, prompt Thomas to schedule it.
+  Don't leave it unmentioned.
+- Report what the review changed.
 
 ## Docs
 
