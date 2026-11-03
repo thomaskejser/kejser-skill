@@ -54,6 +54,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax, naming of system views and catalog columns; SQL kept in `.sql` files. |
 | `etl` | *Placeholder.* Python scripts running `.sql` files in DuckDB, no ETL tools, are settled; acquisition, provenance, staging and re-runs are TBD. |
 | `database` | *Partly placeholder.* SQLite for OLTP, DuckDB for analytics; singular snake_case tables; surrogate integer `<table>_id` keys, natural keys as unique indexes; display-name column named after the table; only `BIGINT`/`DOUBLE`/`DECIMAL`/`TEXT`; avoid NULL (`9999-12-31` for open-ended dates); apps run raw SQL from `.sql` files with bound parameters. Migrations and more are TBD. |
+| `ux-design` | Any UI, any toolkit: one view with zoom levels instead of tabs, detail at the next zoom level, zoom from lists too, never repeat on-screen information, top-20 lists, filters drive every list, outlined text, selection by text colour, translucent overlays, one colour per cell, colour scale fixed across zoom levels. |
 | `markdown` | Every `.md` file: one sentence per line, intent in bullets rather than prose, a single `#` title. |
 | `skill-updates` | Only the running session named `Skills` changes this repo; other agents message it, or ask Thomas to start it. |
 | `collaboration` | Pull and rebase at session start and after idling, explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
@@ -77,7 +78,7 @@ plugins/
     skills/{web-stack,sveltekit,css,deploying,svelte-static,cpanel,social-logos}/
   kejser-code/
     .claude-plugin/plugin.json
-    skills/{language-choice,environment-variables,code-style,cpp,rust,sql-design,database,etl,markdown,skill-updates,collaboration}/SKILL.md
+    skills/{language-choice,environment-variables,code-style,cpp,rust,sql-design,database,etl,ux-design,markdown,skill-updates,collaboration}/SKILL.md
 ```
 
 ## Adding a skill
