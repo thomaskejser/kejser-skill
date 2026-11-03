@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, and colour encodings that are discrete and comparable across views. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colour scales, and when Thomas gives feedback on a UI.
+description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres, treat space as scarce, high-contrast text with black outlines over variable backgrounds, and never hide content behind overlays or highlights. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
 ---
 
 # UX design
@@ -84,8 +84,3 @@ Each principle lists how it played out in Thomas's corrections to a desktop map 
   - Sector grids are semi-transparent so the galaxy shows through.
   - Selection changes the text colour only; Thomas rejected a dark highlight band behind it.
 
-### 10. Colour encodes data honestly and comparably
-
-- One cell, one colour: don't interpolate or blend between cells.
-- A colour scale is relative to the whole dataset and stays the same at every zoom level, so colours compare across views.
-- Accept the consequence: many cells come out dark when zoomed in, and that is fine.
