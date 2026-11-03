@@ -1,61 +1,91 @@
 ---
 name: ux-design
-description: How Thomas wants user interfaces designed, in any toolkit (web, Win32, other desktop) — one view with zoom levels instead of separate tabs, detail shown at the next zoom level rather than crammed in, zoom from lists as well as the map or canvas, never repeating information already on screen, lists capped at top 20, filters that drive every list, legible text over varied backgrounds, selection by text colour, translucent overlays, one colour per cell, and colour scales that stay fixed across zoom levels. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights or colour scales, and when Thomas gives feedback on a UI.
+description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, and colour encodings that are discrete and comparable across views. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colour scales, and when Thomas gives feedback on a UI.
 ---
 
 # UX design
 
 Applies to any user interface, whatever the toolkit.
 Web styling rules live in `kejser-web:css` and `kejser-web:sveltekit`, and this skill doesn't repeat them.
-The rules come from Thomas's corrections to a desktop map view: galaxy regions coloured by a metric, with a table beside the map.
+Each principle lists how it played out in Thomas's corrections to a desktop map view: galaxy regions coloured by a metric, with a table beside the map.
 
 ## How Thomas iterates
 
 - Thomas looks at the running UI and corrects one detail per message.
 - Show the running result after each change, and expect the next correction to be small.
-- Most corrections remove redundancy, free space, or make the view readable at a glance.
-  Check a design against those three before showing it.
+- Before showing a design, check it against every principle below.
 
-## Structure and navigation
+## Principles
 
-- Fold related tabs into one view with zoom levels, not separate tabs per level.
-  - Double-click zooms in one level.
-  - A zoom-out button goes up one level.
-- Put detail at the next zoom level rather than cramming it into the current one.
-  Thomas rejected tiny labels stacked in every cell: "allow me to double click on the sector … then we have enough space to hold all names".
-- Zoom from the list as well as the canvas.
-  Double-clicking a row in the table zooms to that item.
-- A zoomed view shows context around the focus.
-  Make the cells smaller so that surrounding area fits.
+### 1. Show each fact once
 
-## Don't repeat information
-
-- Show nothing that is already visible somewhere else on screen.
-  - No title or summary above a table when the table speaks for itself: "Just the table."
-  - No column restating a filter that is already chosen in a dropdown.
+- Every element must add information not already on screen.
+- In practice:
+  - No title or summary above a table that speaks for itself: "Just the table."
+  - No column restating a filter already chosen in a dropdown.
   - No hover name in a header when a side panel already shows it.
 
-## Layout and density
+### 2. Let the visual carry the information
 
-- Cap lists at the top 20 items, plus a sum row where one applies.
-- Use the space this frees: the legend goes under the table.
-- A colour-gradient legend is aligned bottom right.
-- Place the zoom-out button in the top corner of the canvas, just below the menus.
-- A view heading sits centred over the canvas.
-- Fill the whole canvas area with the content, such as a background fitted to the zoom, up to just under the controls.
+- Encode meaning in an icon, colour, shape or position before reaching for a text annotation.
+- Add a label only when the visual cannot carry the meaning.
+- In practice: the map shows the metric by cell colour, explained once by a legend, not by numbers in each cell.
 
-## Filters
+### 3. Reveal detail at the next level, not all at once
 
-- A filter control drives every list and view it could apply to, not just the main one.
-  A table of items inside a zoomed area is filtered by the same dropdown as the map.
+- Each view shows only what fits legibly at its scale.
+- Finer detail is one step away: zoom in, open, expand.
+- Related views are levels of one view, not separate tabs.
+- A focused view keeps some surrounding context in sight.
+- In practice:
+  - The Region and Sectors tabs folded into zoom levels of the Map tab.
+  - Double-click zooms in one level and a zoom-out button goes up one.
+  - Sector names appear in a 3x3 zoomed grid instead of tiny names stacked in every cell: "then we have enough space to hold all names".
+  - The 3x3 grid shrinks so more surrounding area shows.
 
-## Colour and legibility
+### 4. Every representation of an item offers the same actions
 
-- Text over varied backgrounds gets a black outline so it reads on any colour.
-- Show selection by changing the text colour only.
-  Don't change the background; Thomas rejected a dark highlight band.
-- Overlays such as grids are semi-transparent, so the content underneath stays visible.
-- Each cell has a single colour.
-  Don't interpolate or blend colours between cells.
-- A colour scale is relative to the whole dataset and stays the same at every zoom level.
-  Many cells come out dark when zoomed in, and that is fine.
+- An item shown in two places, such as a map cell and a table row, responds to the same interactions in both.
+- In practice: double-clicking a sector in the table zooms to it, just as on the map.
+
+### 5. One control, one state, everywhere
+
+- A filter or selection applies to every view and list it could affect, not just the main one.
+- In practice: the object-type dropdown filters the sector's target table as well as the map.
+
+### 6. Anchor everything cleanly
+
+- Align every element to an edge or centre of its container: left, centre or right horizontally; top, centre or bottom vertically.
+- Nothing floats at an arbitrary offset.
+- In practice:
+  - The colour legend sits bottom right.
+  - The zoom-out button sits in the top corner of the map, just below the menus.
+  - The view heading is centred over the map.
+
+### 7. Treat space as scarce
+
+- Bound lengths so the layout is predictable, then use the space that frees.
+- Content fills its whole area; no dead margins around a canvas.
+- In practice:
+  - Lists cap at the top 20 items, plus a sum row.
+  - The legend moved into the space under the capped table.
+  - The galaxy background fills the map area up to just under the zoom button, fitted to the zoom.
+
+### 8. Text is readable at a glance on any background
+
+- Use high-contrast text against its background.
+- When the background varies in colour, give the text a black outline, as on a HUD.
+
+### 9. Never hide the content
+
+- Overlays, grids and highlights must leave the content underneath visible.
+- Mark a state with the smallest change that reads clearly.
+- In practice:
+  - Sector grids are semi-transparent so the galaxy shows through.
+  - Selection changes the text colour only; Thomas rejected a dark highlight band behind it.
+
+### 10. Colour encodes data honestly and comparably
+
+- One cell, one colour: don't interpolate or blend between cells.
+- A colour scale is relative to the whole dataset and stays the same at every zoom level, so colours compare across views.
+- Accept the consequence: many cells come out dark when zoomed in, and that is fine.
