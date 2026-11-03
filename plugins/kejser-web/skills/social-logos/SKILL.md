@@ -18,12 +18,12 @@ Never draw a platform logo by hand or fetch one from a random site; use these.
 | `svg/<brand>.svg` | Single colour, `fill="currentColor"`. |
 | `svg/<brand>-light.svg` | Coloured for light surfaces. |
 | `svg/<brand>-dark.svg` | Coloured for dark surfaces. |
-| `sources.md` | Per brand: colours, source, licence, link to its brand rules. |
+| `SOURCES.md` | Per brand: colours, source, licence, link to its brand rules. |
 | `generate.mjs` | Builds everything above from pinned npm packages. |
 
 - Every logo has a `0 0 24 24` `viewBox` and a `<title>` naming the brand.
 - `light` and `dark` use the brand colour when it reaches 3:1 contrast with the surface, otherwise black or white.
-  `sources.md` lists which.
+  `SOURCES.md` lists which.
 
 ## In a SvelteKit app
 
@@ -62,7 +62,7 @@ Never draw a platform logo by hand or fetch one from a random site; use these.
 - Keep clear space around it of at least a quarter of its size.
 - Don't draw it smaller than 16px.
 - Don't make it bigger than your own logo or imply the platform endorses the app.
-- A platform's own guidelines win where they are stricter; `sources.md` links them.
+- A platform's own guidelines win where they are stricter; `SOURCES.md` links them.
 
 ## Licences
 

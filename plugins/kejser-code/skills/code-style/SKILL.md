@@ -24,7 +24,7 @@ Never:
 - prose written to convince a reviewer. Tests and assertions carry that burden.
 - a comment longer than the code it documents
 
-If a block needs a comment to explain its role, extract it into a well-named function instead. If an explanation needs a paragraph, it belongs in `docs/<topic>.md` (or the README that owns the area), with at most a one-line pointer from the code. If it isn't worth a doc, it goes nowhere.
+If a block needs a comment to explain its role, extract it into a well-named function instead. If an explanation needs a paragraph, it belongs in `docs/<TOPIC>.md` (or the README that owns the area), with at most a one-line pointer from the code. If it isn't worth a doc, it goes nowhere.
 
 ## Describe the code as it is now
 
@@ -75,5 +75,5 @@ After finishing a new feature or reworking one, go back over every file the work
 ## Docs
 
 - Rationale and design live in `docs/` (or `doc/`) as one file per topic, not in source.
-- When you hit a constraint, write it down where the next author will read it (e.g. `docs/limitations.md`) rather than leaving it to be rediscovered.
+- When you hit a constraint, write it down where the next author will read it (e.g. `docs/LIMITATIONS.md`) rather than leaving it to be rediscovered.
 - Keep command examples generic — no personal usernames, local credential paths, or secrets.

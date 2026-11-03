@@ -1,6 +1,6 @@
 ---
 name: markdown
-description: How Thomas wants Markdown files written — one sentence per line, intent stated in bullets rather than long prose, a single top-level # header, and describing the current state rather than history. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
+description: How Thomas wants Markdown files written — one sentence per line, intent stated in bullets rather than long prose, a single top-level # header, uppercase file names with a lowercase .md extension, and describing the current state rather than history. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
 ---
 
 # Markdown files
@@ -38,6 +38,13 @@ It governs files, not chat replies.
 - No changelog sections, "previously…", "now uses…", or dated update notes.
 - When the code changes, rewrite the affected text instead of appending to it.
 - History lives in git (see `kejser-code:code-style`).
+
+## File names
+
+- Name Markdown files in uppercase with a lowercase `.md` extension: `README.md`, `DESIGN.md`, `SOURCES.md`.
+- Separate words with underscores: `DEAD_ENDS.md`.
+- Never `Sources.md` or `sources.md`.
+- Exception: content files a site renders as pages keep lowercase names, because the file name is the URL slug (see `kejser-web:svelte-static`).
 
 ## Headings
 
