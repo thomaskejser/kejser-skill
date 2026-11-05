@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, and one colour palette with RGB codes defined in a single central place. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
+description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres with pixel-perfect alignment and no wavy margins, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, and one colour palette with RGB codes defined in a single central place. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
 ---
 
 # UX design
@@ -57,10 +57,14 @@ Each principle lists how it played out in Thomas's corrections to a desktop map 
 
 - Align every element to an edge or centre of its container: left, centre or right horizontally; top, centre or bottom vertically.
 - Nothing floats at an arbitrary offset.
+- Alignment is pixel perfect: "If you are going to make wavy margins, you better have a really good reason."
+- Every block in a column shares the same left and right edges.
+  Don't give an individual element its own width cap unless there is a stated reason.
 - In practice:
   - The colour legend sits bottom right.
   - The zoom-out button sits in the top corner of the map, just below the menus.
   - The view heading is centred over the map.
+  - On a content site, paragraphs capped at 65ch stopped short of the right edge that the header, headings and answer box line up on; the cap was removed so the column alone sets the width.
 
 ### 7. Treat space as scarce
 
@@ -83,7 +87,6 @@ Each principle lists how it played out in Thomas's corrections to a desktop map 
 - In practice:
   - Sector grids are semi-transparent so the galaxy shows through.
   - Selection changes the text colour only; Thomas rejected a dark highlight band behind it.
-
 
 ### 10. One palette, defined in one place
 

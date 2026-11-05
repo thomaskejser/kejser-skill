@@ -96,7 +96,7 @@ Pick selectors in this order of preference:
   Every other sheet uses role tokens.
 - Role tokens name what a colour is for: `--surface`, `--surface-raised`, `--surface-sunken`, `--text`, `--text-muted`, `--border`, `--border-strong`, `--accent`, `--on-accent`, `--danger`, `--ok`, `--warn`.
 - Scales use t-shirt steps: `--size-sm` … `--size-3xl`, `--space-3xs` … `--space-3xl`, `--radius-sm/md/lg/round`, `--duration-fast/base/slow`.
-- Layout sizes are tokens too: `--measure`, `--page-width`, `--page-gutter`, `--tap-target`, `--layer-sticky`.
+- Layout sizes are tokens too: `--page-width`, `--page-gutter`, `--tap-target`, `--layer-sticky`.
 - Media queries can't read custom properties, so breakpoints are the one literal allowed outside tokens.
   Keep them to a small set, and check the existing ones before adding a new one.
 
@@ -134,7 +134,8 @@ Every surface works from 320px wide to widescreen.
 - Put `overflow-wrap: anywhere` on text holding identifiers, URIs or connection strings.
   It is the wrap mode that lowers min-content, so it fixes overflow all the way up the tree.
   Prose stays on `break-word`.
-- Prose stops at `--measure`, never at a pixel width.
+- The column sets the width of prose.
+  Never cap `p`, `li`, `dd`, `blockquote` or other single elements with their own `max-inline-size`; every block in a column shares its left and right edges (see `kejser-code:ux-design`).
 - `--tap-target` sets the minimum height of buttons, nav links and summaries.
 - Check it: at 320px, `document.documentElement.scrollWidth` must not exceed `innerWidth`, in both themes.
 
