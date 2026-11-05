@@ -50,6 +50,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `environment-variables` | `<PREFIX>_<NAME>` names; values in `~/.zshenv`, or the Windows user environment via the system API; agents set them only when asked; code fails loudly on a missing one. |
 | `code-style` | Any language. Comments default to none (contract only, rationale in `docs/`), guard clauses, fail loudly, no silently-ignored input, testing and verification, revisiting changed code against the rules after every feature or rework. |
 | `cpp` | Modern C++: smart pointers, `optional`/`expected`, RAII, `const` everywhere, free functions, no `using namespace`, braces always, CLI11, vcpkg manifest mode, Makefile over raw CMake. |
+| `code-signing` | Free and open-source releases ship unsigned with SHA-256 checksums; only a paid app is signed, never through SignPath-style programmes. Reference for certificates, SmartScreen, signtool and Inno Setup. |
 | `rust` | *Placeholder.* Fully self-contained binaries (musl on Linux, static CRT on Windows, bundled C libraries, rustls, assets compiled in); Windows APIs only through Microsoft's `windows` or `windows-sys` crates. The rest is TBD. |
 | `sql-design` | Designing SQL surfaces: established statement forms, presence semantics, precise SQLSTATEs, rejecting unsupported syntax, naming of system views and catalog columns; SQL kept in `.sql` files. |
 | `etl` | *Placeholder.* Python scripts running `.sql` files in DuckDB, no ETL tools, are settled; acquisition, provenance, staging and re-runs are TBD. |
@@ -78,7 +79,7 @@ plugins/
     skills/{web-stack,sveltekit,css,deploying,svelte-static,cpanel,social-logos}/
   kejser-code/
     .claude-plugin/plugin.json
-    skills/{language-choice,environment-variables,code-style,cpp,rust,sql-design,database,etl,ux-design,markdown,skill-updates,collaboration}/SKILL.md
+    skills/{language-choice,environment-variables,code-style,cpp,rust,code-signing,sql-design,database,etl,ux-design,markdown,skill-updates,collaboration}/SKILL.md
 ```
 
 ## Adding a skill

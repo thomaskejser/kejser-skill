@@ -40,6 +40,7 @@ Each row's skill holds the conventions for that language.
 
 - Anything that ships as an executable for people or machines to run is written in Rust and built fully self-contained (see `kejser-code:rust`).
 - Not Python, Node or Go packaged into an executable.
+- Free and open-source releases ship unsigned; only a paid app is code-signed (see `kejser-code:code-signing`).
 
 ## SQL for database logic
 

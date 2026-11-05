@@ -1,6 +1,6 @@
 ---
 name: cpanel
-description: Publishing a static site to cPanel shared hosting over FTPS — the build is zipped, uploaded with a one-shot PHP unpack script, and unpacked in the web root. Includes a ready-made deploy-cpanel.ts helper, the <PREFIX>_FTP_* / <PREFIX>_SITE_URL environment variables (kept in shell exports such as ~/.zshenv), and the .htaccess every site ships (extensionless URLs, 404 page, cPanel's PHP handler). Use whenever deploying, publishing or uploading a site to cPanel, shared hosting, Apache or an FTP server, setting up a deploy script or .htaccess for an adapter-static SvelteKit site, or choosing its deploy environment variables.
+description: Publishing a static site to cPanel shared hosting over FTPS — the build is zipped, uploaded with a one-shot PHP unpack script, and unpacked in the web root. Every deploy is preceded by a commit and push, then a fresh build. Includes a ready-made deploy-cpanel.ts helper, the <PREFIX>_FTP_* / <PREFIX>_SITE_URL environment variables (kept in shell exports such as ~/.zshenv), and the .htaccess every site ships (extensionless URLs, 404 page, cPanel's PHP handler). Use whenever deploying, publishing or uploading a site to cPanel, shared hosting, Apache or an FTP server, setting up a deploy script or .htaccess for an adapter-static SvelteKit site, or choosing its deploy environment variables.
 ---
 
 # Publishing to cPanel
@@ -40,8 +40,17 @@ Node servers deploy as described in `kejser-web:deploying`.
    ```
 
 4. Add `static/.htaccess` (see [.htaccess](#htaccess)).
-5. Ask Thomas to set the variables, then run `npm run deploy`.
-   Deploying is outward-facing: confirm with Thomas before every run.
+5. Ask Thomas to set the variables, then deploy (see [Every deploy](#every-deploy)).
+
+## Every deploy
+
+1. Commit every change the build will include, and push it to the remote.
+   The live site is never built from uncommitted or unpushed files.
+   Files that aren't yours in the working tree go to Thomas before you commit or build.
+2. Confirm with Thomas: deploying is outward-facing.
+3. Run `npm run deploy`, which builds from that commit and uploads.
+   A deploy script that only uploads needs `npm run build` first, so stale `build/` output never goes live.
+4. Open the live URL and check the change is there.
 
 - The helper needs Node ≥22.18 to run TypeScript directly.
 - `node scripts/deploy-cpanel.ts [PREFIX] [buildDir]` takes the prefix and the build directory, `build` by default.
