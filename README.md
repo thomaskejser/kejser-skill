@@ -57,7 +57,7 @@ Claude Code reads skills from `~/.claude/skills/` and `.claude/skills/`; Cowork 
 | `database` | *Partly placeholder.* SQLite for OLTP, DuckDB for analytics; singular snake_case tables; surrogate integer `<table>_id` keys, natural keys as unique indexes; display-name column named after the table; only `BIGINT`/`DOUBLE`/`DECIMAL`/`TEXT`; avoid NULL (`9999-12-31` for open-ended dates); apps run raw SQL from `.sql` files with bound parameters. Migrations and more are TBD. |
 | `ux-design` | Principles for any UI, any toolkit: show each fact once, let icons/colour/position carry information instead of annotations, detail at the next zoom level, same actions on every representation, one filter drives every view, anchor to edges and centres, space is scarce, high-contrast outlined text, never hide content, one central colour palette. |
 | `markdown` | Every `.md` file: one sentence per line, intent in bullets rather than prose, a single `#` title, uppercase file names with a lowercase `.md` extension. |
-| `skill-updates` | Only the running session named `Skills` changes this repo; other agents message it, or ask Thomas to start it. |
+| `skill-updates` | Only the skill agents `Skills` (another machine) and `kejser-skill` (Windows) change this repo and coordinate with each other; other agents message one of them, or ask Thomas to start one. |
 | `collaboration` | Pull and rebase at session start and after idling, explicit-path staging, one author per commit with session trailers, shared trees and dev servers, honest reporting, credential and production safety. |
 
 Once installed, skills are referenced as `/<plugin>:<skill>`, e.g. `/kejser-web:css`, `/kejser-code:cpp`.
@@ -84,7 +84,7 @@ plugins/
 
 ## Adding a skill
 
-Only the agent session named `Skills` changes this repo — see `kejser-code:skill-updates`.
+Only the skill agents `Skills` and `kejser-skill` change this repo — see `kejser-code:skill-updates`.
 
 1. Create `plugins/<plugin>/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`).
 2. Write the `description` as a trigger — it is what Claude reads to decide whether the skill is relevant, so state the situations that should invoke it.
