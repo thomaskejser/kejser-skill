@@ -1,6 +1,6 @@
 ---
 name: skill-updates
-description: Who may change Thomas's skills and how to route a change. Only the skill agents edit the kejser-skill repo: the session named "Skills" (another machine) and the session named "kejser-skill" (Thomas's Windows machine). They coordinate with each other; every other agent sends the change to one of them or asks Thomas to start one. Use whenever you want to add, change or remove a skill, when Thomas states a general preference that belongs in a skill, or before touching ~/source/kejser-skill or the installed kejser-web / kejser-code plugins.
+description: Who may change Thomas's skills and how to route a change. Only the skill agents edit the kejser-skill repo: the session named "Skills" (Thomas's Mac) and the session named "kejser-skill" (Thomas's Windows machine). They coordinate with each other; every other agent sends the change to one of them or asks Thomas to start one. Use whenever you want to add, change or remove a skill, when Thomas states a general preference that belongs in a skill, or before touching ~/source/kejser-skill or the installed kejser-web / kejser-code plugins.
 ---
 
 # Skill updates
@@ -11,7 +11,7 @@ Two skill agents own it, one per machine, so changes stay consistent and every o
 ## The rule
 
 - Only the skill agents change the skill repo:
-  - **`Skills`**, running on another machine;
+  - **`Skills`**, running on Thomas's Mac (`~/source/kejser-skill`);
   - **`kejser-skill`**, running on Thomas's Windows machine (`C:\Source\kejser-skill`).
 - That covers editing, committing and pushing the repo, and changing the installed plugin copies under `~/.claude/plugins/`.
 - No other agent makes those changes, even small ones.
