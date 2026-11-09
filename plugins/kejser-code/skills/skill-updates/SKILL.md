@@ -36,7 +36,8 @@ Two skill agents own it, one per machine, so changes stay consistent and every o
 ## If you are a skill agent
 
 - Commit and push every change straight away, without asking; other agents need the latest version.
-- Run `git pull --rebase` right before every edit, not just at session start.
+- Whenever you are about to modify the repo, run `git pull --rebase` first, every time, not just at session start.
+  The other skill agent works on the same repo from a different machine and may have pushed since your last pull.
 - Edit the skill, and follow `kejser-code:markdown` for the file itself.
 - Bump `version` in the plugin's `plugin.json` and in `.claude-plugin/marketplace.json`, starting from the versions just pulled, then run `claude plugin validate .`.
 - Stage explicit paths, commit, and push.

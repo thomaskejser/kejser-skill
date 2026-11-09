@@ -86,10 +86,11 @@ plugins/
 
 Only the skill agents `Skills` and `kejser-skill` change this repo — see `kejser-code:skill-updates`.
 
-1. Create `plugins/<plugin>/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`).
-2. Write the `description` as a trigger — it is what Claude reads to decide whether the skill is relevant, so state the situations that should invoke it.
-3. Bump `version` in both `plugin.json` and `marketplace.json`.
-4. Commit and push. Installed copies pick it up when the marketplace is re-pulled.
+1. Run `git pull --rebase`: the other skill agent works on the same repo from a different machine.
+2. Create `plugins/<plugin>/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`).
+3. Write the `description` as a trigger — it is what Claude reads to decide whether the skill is relevant, so state the situations that should invoke it.
+4. Bump `version` in both `plugin.json` and `marketplace.json`.
+5. Commit and push. Installed copies pick it up when the marketplace is re-pulled.
 
 Supporting files (`scripts/`, `references/`, `assets/`) can sit alongside `SKILL.md` and are loaded on demand when the skill points at them.
 
