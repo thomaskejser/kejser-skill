@@ -87,7 +87,7 @@ Node servers deploy as described in `kejser-web:deploying`.
 - A git-ignored `.env` in the project is optional; `--env-file-if-exists` loads it when present.
 - When a variable is set in both places, the shell's value wins; Node's `--env-file` never overrides the environment.
 - Never write the values into the repo, `config.json`, or a public build-time variable, and never print the password.
-- Agents set them only when Thomas asks; otherwise they ask him to (see `kejser-code:environment-variables`).
+- Agents set them only when Thomas asks; otherwise they ask Thomas to set them (see `kejser-code:environment-variables`).
 
 ## .htaccess
 

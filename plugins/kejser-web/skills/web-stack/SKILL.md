@@ -45,7 +45,7 @@ Do not pick React, Vue/Nuxt, Next, or a static-site generator for new work unles
 Thomas iterates on running apps together with the agent.
 
 - Start the dev server, and restart it after every edit.
-- Then tell Thomas the localhost URL where he can see the change, e.g. `http://localhost:5310/`.
+- Then tell Thomas the localhost URL where the change can be seen, e.g. `http://localhost:5310/`.
 - Before reporting the URL, check that it responds.
 - Run the server in the background, so the session stays free while it runs.
 - Use a dedicated port per project with `--strictPort`, never a shared default like `5173`.

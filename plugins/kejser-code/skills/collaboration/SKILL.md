@@ -1,6 +1,6 @@
 ---
 name: collaboration
-description: How Thomas wants agents to work alongside him and other agents — pulling and rebasing at session start and after idling, staging and committing in shared trees, commit authorship trailers, shared dev servers, reporting findings honestly, and handling credentials and production systems. Use at the start of every session, when resuming after a pause, before any git commit, when several agents share a working tree, when reporting results or handing off work, and when touching credentials, clusters, or production.
+description: How Thomas wants agents to work alongside Thomas and other agents — pulling and rebasing at session start and after idling, staging and committing in shared trees, commit authorship trailers, shared dev servers, reporting findings honestly, and handling credentials and production systems. Use at the start of every session, when resuming after a pause, before any git commit, when several agents share a working tree, when reporting results or handing off work, and when touching credentials, clusters, or production.
 ---
 
 # Collaboration

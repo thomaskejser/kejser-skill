@@ -28,7 +28,7 @@ They never live in the repo.
 ## Setting them
 
 Agents set or change a variable only when Thomas asks.
-Otherwise they name the variable and ask him to set it.
+Otherwise they name the variable and ask Thomas to set it.
 
 ### macOS and Linux: `~/.zshenv`
 

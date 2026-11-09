@@ -1,6 +1,6 @@
 ---
 name: code-signing
-description: When and how Thomas's Windows binaries and installers are code-signed — free and open-source releases ship unsigned with SHA-256 checksums, signing happens only for a paid app, and never through SignPath-style programmes that demand an install-time privacy policy or a network opt-out. Also the reference for when he does sign — certificate options and prices, SmartScreen reputation, signtool, Inno Setup and CI. Use whenever releasing, packaging or publishing a Windows executable or installer, writing a release pipeline, or when code signing, Authenticode, SmartScreen, Smart App Control, Defender warnings or a signing service comes up.
+description: When and how Thomas's Windows binaries and installers are code-signed — free and open-source releases ship unsigned with SHA-256 checksums, signing happens only for a paid app, and never through SignPath-style programmes that demand an install-time privacy policy or a network opt-out. Also the reference for signing a paid app — certificate options and prices, SmartScreen reputation, signtool, Inno Setup and CI. Use whenever releasing, packaging or publishing a Windows executable or installer, writing a release pipeline, or when code signing, Authenticode, SmartScreen, Smart App Control, Defender warnings or a signing service comes up.
 ---
 
 # Code signing
@@ -9,7 +9,7 @@ description: When and how Thomas's Windows binaries and installers are code-sign
 
 - Free and open-source releases are not signed.
   They ship unsigned, with a `SHA256SUMS` file published next to the downloads.
-- Thomas signs only when he is creating a paid app.
+- Thomas signs only when creating a paid app.
   Don't buy a certificate, set up a signing service or add signing to CI for anything else.
 - No SignPath-style programmes: never add an install-time privacy policy page, a network opt-out or any other requirement just to qualify for a free signing service.
 - Unsigned Windows binaries get SmartScreen and Smart App Control warnings; that is accepted for free releases, not a reason to sign.
