@@ -58,13 +58,13 @@ Node servers deploy as described in `kejser-web:deploying`.
 
 ## Environment variables
 
-| Variable | Holds | Example |
-|---|---|---|
+| Variable            | Holds                                                    | Example                         |
+| ------------------- | -------------------------------------------------------- | ------------------------------- |
 | `<PREFIX>_FTP_HOST` | The cPanel server's own hostname, not the site's domain. | `server42.hosting-provider.com` |
-| `<PREFIX>_FTP_PORT` | Optional; defaults to `21`. | `21` |
-| `<PREFIX>_FTP_USER` | The site's FTP account. | `deploy@example.com` |
-| `<PREFIX>_FTP_PWD` | That account's password. | |
-| `<PREFIX>_SITE_URL` | The public site URL, with `https://`. | `https://www.example.com` |
+| `<PREFIX>_FTP_PORT` | Optional; defaults to `21`.                              | `21`                            |
+| `<PREFIX>_FTP_USER` | The site's FTP account.                                  | `deploy@example.com`            |
+| `<PREFIX>_FTP_PWD`  | That account's password.                                 |                                 |
+| `<PREFIX>_SITE_URL` | The public site URL, with `https://`.                    | `https://www.example.com`       |
 
 ### The prefix
 

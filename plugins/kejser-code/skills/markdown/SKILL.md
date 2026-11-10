@@ -1,6 +1,6 @@
 ---
 name: markdown
-description: How Thomas wants Markdown files written — one sentence per line, intent stated in bullets rather than long prose, a single top-level # header, uppercase file names with a lowercase .md extension, and describing the current state rather than history. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
+description: How Thomas wants Markdown files written — one sentence per line, tables padded so the source reads as a grid, intent stated in bullets rather than long prose, a single top-level # header, uppercase file names with a lowercase .md extension, and describing the current state rather than history. Use whenever creating or editing any .md file, including README.md, CLAUDE.md, AGENTS.md, SKILL.md and docs/.
 ---
 
 # Markdown files
@@ -23,6 +23,22 @@ It governs files, not chat replies.
 
 - Never hard-wrap a sentence at a fixed column.
 - Code blocks, tables and front matter are exempt.
+
+## Tables look like tables
+
+- Pad every cell so the pipes line up in each column, and the raw `.md` reads as a grid.
+- The separator row spans each column's full width; alignment markers stay at the ends: `| ------: |`.
+- One space between each pipe and the cell text, as Prettier formats it.
+- Numbers go in right-aligned columns, padded on the left so their digits line up.
+
+  ```markdown
+  | Engine | Default for        | Rows |
+  | ------ | ------------------ | ---: |
+  | SQLite | Application data   |   12 |
+  | DuckDB | Analytics, staging |  340 |
+  ```
+
+- After editing a table, re-pad the whole table, not just the changed row.
 
 ## Bullets over prose
 

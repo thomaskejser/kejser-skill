@@ -37,14 +37,14 @@ These conventions apply when creating a **new** database. A database that alread
 
 Use only these:
 
-| Kind | Type |
-|---|---|
-| Whole numbers | `BIGINT` — never `INT`, `INTEGER`, `SMALLINT`, `TINYINT` or similar |
-| Floating point | `DOUBLE` — never `FLOAT` or `REAL` |
-| Exact numbers (money, quantities with fixed scale) | `DECIMAL` |
-| Text | `TEXT` — never `VARCHAR(n)`, `CHAR(n)` or any length-limited string type |
-| A moment in time: events, audit times (`submit_time`, `created_time`) | `TIMESTAMPTZ`, holding UTC |
-| A wall-clock time that only means something in a place's time zone | `TIMESTAMP` |
+| Kind                                                                  | Type                                                                     |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Whole numbers                                                         | `BIGINT` — never `INT`, `INTEGER`, `SMALLINT`, `TINYINT` or similar      |
+| Floating point                                                        | `DOUBLE` — never `FLOAT` or `REAL`                                       |
+| Exact numbers (money, quantities with fixed scale)                    | `DECIMAL`                                                                |
+| Text                                                                  | `TEXT` — never `VARCHAR(n)`, `CHAR(n)` or any length-limited string type |
+| A moment in time: events, audit times (`submit_time`, `created_time`) | `TIMESTAMPTZ`, holding UTC                                               |
+| A wall-clock time that only means something in a place's time zone    | `TIMESTAMP`                                                              |
 
 - Where the engine has `TIMESTAMPTZ`, every timestamp meant to be in UTC uses it.
 - Plain `TIMESTAMP` is only for times that depend on a time zone's context, such as when the sun rises in Estonia.

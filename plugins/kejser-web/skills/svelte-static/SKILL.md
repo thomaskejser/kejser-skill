@@ -14,16 +14,16 @@ Its stylesheets do not follow `kejser-web:css`; the skill wins.
 
 ## Related skills
 
-| Skill | Covers |
-|---|---|
-| `kejser-web:web-stack` | Stack, tooling, scaffolding and the dev-server loop. |
-| `kejser-web:sveltekit` | Components, runes, naming, no wrapper `<div>`s. |
-| `kejser-web:css` | All styling: global sheets, tokens, no `<style>` blocks. |
-| `kejser-web:cpanel` | Publishing the build to cPanel over FTPS; cPanel is the preferred host for static sites. |
-| `kejser-code:environment-variables` | Naming and storing deploy credentials. |
-| `kejser-code:code-style` | Comments, errors, tests. |
-| `kejser-code:markdown` | Repo docs, and the line and heading rules for content files. |
-| `kejser-code:collaboration` | Shared trees, commits, credentials. |
+| Skill                               | Covers                                                                                   |
+| ----------------------------------- | ---------------------------------------------------------------------------------------- |
+| `kejser-web:web-stack`              | Stack, tooling, scaffolding and the dev-server loop.                                     |
+| `kejser-web:sveltekit`              | Components, runes, naming, no wrapper `<div>`s.                                          |
+| `kejser-web:css`                    | All styling: global sheets, tokens, no `<style>` blocks.                                 |
+| `kejser-web:cpanel`                 | Publishing the build to cPanel over FTPS; cPanel is the preferred host for static sites. |
+| `kejser-code:environment-variables` | Naming and storing deploy credentials.                                                   |
+| `kejser-code:code-style`            | Comments, errors, tests.                                                                 |
+| `kejser-code:markdown`              | Repo docs, and the line and heading rules for content files.                             |
+| `kejser-code:collaboration`         | Shared trees, commits, credentials.                                                      |
 
 ## Scaffold
 
@@ -143,10 +143,10 @@ static/
 
 Two files in this skill's folder do the work, copied into the project unchanged:
 
-| File | Copy to | Does |
-|---|---|---|
-| [`markdown.ts`](markdown.ts) | `src/lib/server/markdown.ts` | Reads a content file, parses its front matter, renders its HTML at build time. |
-| [`Prose.svelte`](Prose.svelte) | `src/lib/components/Prose.svelte` | Displays rendered HTML as `<article class="prose">`. |
+| File                           | Copy to                           | Does                                                                           |
+| ------------------------------ | --------------------------------- | ------------------------------------------------------------------------------ |
+| [`markdown.ts`](markdown.ts)   | `src/lib/server/markdown.ts`      | Reads a content file, parses its front matter, renders its HTML at build time. |
+| [`Prose.svelte`](Prose.svelte) | `src/lib/components/Prose.svelte` | Displays rendered HTML as `<article class="prose">`.                           |
 
 ```ts
 // src/routes/about/+page.server.ts

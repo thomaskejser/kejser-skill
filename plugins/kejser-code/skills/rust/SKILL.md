@@ -17,11 +17,11 @@ No installer, no runtime to install first, no `.dll`, `.so` or `.dylib` shipped 
 
 ### Per platform
 
-| Platform | Build | May link dynamically | Check with |
-|---|---|---|---|
-| Linux | `--target x86_64-unknown-linux-musl` (or `aarch64-…`) | Nothing | `ldd <binary>` says it is static |
-| Windows | MSVC target with the static CRT (below) | System DLLs only (`kernel32.dll`, `user32.dll`, …) | `dumpbin /dependents <binary>`: no `vcruntime140.dll`, no `msvcp140.dll` |
-| macOS | Default target | `libSystem` and Apple system frameworks | `otool -L <binary>`: nothing from Homebrew or `/usr/local` |
+| Platform | Build                                                 | May link dynamically                               | Check with                                                               |
+| -------- | ----------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------ |
+| Linux    | `--target x86_64-unknown-linux-musl` (or `aarch64-…`) | Nothing                                            | `ldd <binary>` says it is static                                         |
+| Windows  | MSVC target with the static CRT (below)               | System DLLs only (`kernel32.dll`, `user32.dll`, …) | `dumpbin /dependents <binary>`: no `vcruntime140.dll`, no `msvcp140.dll` |
+| macOS    | Default target                                        | `libSystem` and Apple system frameworks            | `otool -L <binary>`: nothing from Homebrew or `/usr/local`               |
 
 - Linux builds use musl, never glibc: a glibc binary depends on the glibc version of the machine it was built on.
 - Windows links the C runtime statically, set once in `.cargo/config.toml`:

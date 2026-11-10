@@ -10,16 +10,16 @@ Never draw a platform logo by hand or fetch one from a random site; use these.
 
 ## What's here
 
-| Path | Holds |
-|---|---|
-| `svelte/SocialLogo.svelte` | Component that renders any logo inline. |
-| `svelte/social-logos.ts` | Path data for every logo, and the `SocialBrand` type. |
-| `svelte/social-logos.css` | Sizing, and brand colours that follow the theme. |
-| `svg/<brand>.svg` | Single colour, `fill="currentColor"`. |
-| `svg/<brand>-light.svg` | Coloured for light surfaces. |
-| `svg/<brand>-dark.svg` | Coloured for dark surfaces. |
-| `SOURCES.md` | Per brand: colours, source, licence, link to its brand rules. |
-| `generate.mjs` | Builds everything above from pinned npm packages. |
+| Path                       | Holds                                                         |
+| -------------------------- | ------------------------------------------------------------- |
+| `svelte/SocialLogo.svelte` | Component that renders any logo inline.                       |
+| `svelte/social-logos.ts`   | Path data for every logo, and the `SocialBrand` type.         |
+| `svelte/social-logos.css`  | Sizing, and brand colours that follow the theme.              |
+| `svg/<brand>.svg`          | Single colour, `fill="currentColor"`.                         |
+| `svg/<brand>-light.svg`    | Coloured for light surfaces.                                  |
+| `svg/<brand>-dark.svg`     | Coloured for dark surfaces.                                   |
+| `SOURCES.md`               | Per brand: colours, source, licence, link to its brand rules. |
+| `generate.mjs`             | Builds everything above from pinned npm packages.             |
 
 - Every logo has a `0 0 24 24` `viewBox` and a `<title>` naming the brand.
 - `light` and `dark` use the brand colour when it reaches 3:1 contrast with the surface, otherwise black or white.

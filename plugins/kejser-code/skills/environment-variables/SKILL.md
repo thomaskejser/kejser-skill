@@ -16,10 +16,10 @@ They never live in the repo.
 
 ## Where values live
 
-| OS | Home | Takes effect in |
-|---|---|---|
-| macOS, Linux | `export` lines in `~/.zshenv` | Every new zsh, including the non-interactive shells agents and scripts run in |
-| Windows | User environment variables (`HKCU\Environment`) | Every process started after the change |
+| OS           | Home                                            | Takes effect in                                                               |
+| ------------ | ----------------------------------------------- | ----------------------------------------------------------------------------- |
+| macOS, Linux | `export` lines in `~/.zshenv`                   | Every new zsh, including the non-interactive shells agents and scripts run in |
+| Windows      | User environment variables (`HKCU\Environment`) | Every process started after the change                                        |
 
 - A git-ignored `.env` in a project is optional.
   When both are set, the shell's value wins: load `.env` with Node's `--env-file-if-exists`, which never overrides the environment.

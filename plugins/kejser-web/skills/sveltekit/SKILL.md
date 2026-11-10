@@ -116,13 +116,13 @@ Import through `#lib/...` (`$lib/...` in SvelteKit 2) rather than long relative 
 New projects scaffold SvelteKit 3.
 Where it differs from SvelteKit 2:
 
-| Concern | SvelteKit 3 | SvelteKit 2 |
-|---|---|---|
-| Config | `sveltekit({...})` in `vite.config.ts` | `kit` in `svelte.config.js`, which SvelteKit 3 refuses to start with |
-| `src/lib` | `#lib/...` with the file's extension (`#lib/server/db.ts`), from `"imports"` in `package.json` | `$lib/...` |
-| Other import aliases | Entries in `package.json` `"imports"`, e.g. `"#components/*": "./src/components/*"` | `kit.alias` |
-| Environment variables | Declared in `src/env.ts` with `defineEnvVars`, imported from `$app/env/private` or `$app/env/public` | `$env/static/private`, `$env/dynamic/private` and the `public` pair |
-| `browser`, `dev`, `building` | `$app/env` | `$app/environment` |
+| Concern                      | SvelteKit 3                                                                                          | SvelteKit 2                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Config                       | `sveltekit({...})` in `vite.config.ts`                                                               | `kit` in `svelte.config.js`, which SvelteKit 3 refuses to start with |
+| `src/lib`                    | `#lib/...` with the file's extension (`#lib/server/db.ts`), from `"imports"` in `package.json`       | `$lib/...`                                                           |
+| Other import aliases         | Entries in `package.json` `"imports"`, e.g. `"#components/*": "./src/components/*"`                  | `kit.alias`                                                          |
+| Environment variables        | Declared in `src/env.ts` with `defineEnvVars`, imported from `$app/env/private` or `$app/env/public` | `$env/static/private`, `$env/dynamic/private` and the `public` pair  |
+| `browser`, `dev`, `building` | `$app/env`                                                                                           | `$app/environment`                                                   |
 
 - `#lib/server/db` without `.ts` builds, but `svelte-check` can't resolve it; always write the extension.
 - `$lib` is removed, and the `alias` option is deprecated; don't add `alias: { $lib: ... }` back to keep old imports working.

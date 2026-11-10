@@ -47,16 +47,16 @@ Pick selectors in this order of preference:
   Svelte's scoped CSS adds a hash class that stops global selectors matching.
 - Components emit semantic markup and inherit their appearance.
 
-| Sheet | Layer | Owns |
-|---|---|---|
-| `tokens.css` | `tokens` | Every raw value: palette, role colours, type, space, radii, durations, layout sizes, z-index layers. Also `@font-face`. |
-| `reset.css` | `reset` | Box sizing, margin reset, media defaults, `[hidden]`, focus ring, reduced motion. |
-| `text.css` | `base` | Prose: `body` type, headings, paragraphs, lists, `dl`, links, inline semantics, `code`, `kbd`, `pre`, `blockquote`, `hr`. |
-| `table.css` | `base` | Tables: `thead`, sticky headers, zebra rows, sorting state, numeric cells, scrolling region. |
-| `form.css` | `base` | `form`, `fieldset`, `label`, inputs, `select`, checkboxes, buttons and their `data-action` variants, validation states. |
-| `navigation.css` | `base` | `nav`, menus, breadcrumbs, tabs, steps, pagination, trees, `aria-current`. |
-| `layout.css` | `layout` | Page grid and landmark regions (`header`, `nav`, `aside`, `main`, `footer`), sticky banner, flow spacing, page width. |
-| `feedback.css` | `components` | Status and alert callouts, `dialog`, popovers, disclosure (`details`), spinners, `progress`, `meter`, `[aria-busy]`. |
+| Sheet            | Layer        | Owns                                                                                                                      |
+| ---------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `tokens.css`     | `tokens`     | Every raw value: palette, role colours, type, space, radii, durations, layout sizes, z-index layers. Also `@font-face`.   |
+| `reset.css`      | `reset`      | Box sizing, margin reset, media defaults, `[hidden]`, focus ring, reduced motion.                                         |
+| `text.css`       | `base`       | Prose: `body` type, headings, paragraphs, lists, `dl`, links, inline semantics, `code`, `kbd`, `pre`, `blockquote`, `hr`. |
+| `table.css`      | `base`       | Tables: `thead`, sticky headers, zebra rows, sorting state, numeric cells, scrolling region.                              |
+| `form.css`       | `base`       | `form`, `fieldset`, `label`, inputs, `select`, checkboxes, buttons and their `data-action` variants, validation states.   |
+| `navigation.css` | `base`       | `nav`, menus, breadcrumbs, tabs, steps, pagination, trees, `aria-current`.                                                |
+| `layout.css`     | `layout`     | Page grid and landmark regions (`header`, `nav`, `aside`, `main`, `footer`), sticky banner, flow spacing, page width.     |
+| `feedback.css`   | `components` | Status and alert callouts, `dialog`, popovers, disclosure (`details`), spinners, `progress`, `meter`, `[aria-busy]`.      |
 
 - New rules go in the sheet that owns the concern.
 - Add another sheet only when something fits none of the eight, and say why.
