@@ -91,13 +91,16 @@ The reference implementation is `agenttelemetry` in the `sql-arena-data` repo; r
 - Parquet, one folder per table: `<dataset>/sf<N>/<table>/<table>_NNNN.parquet`, files of about 500 MB.
 - Tables are stored sorted by their time column.
 - Queries are checked in once as templates in `<dataset>/queries/qNN.sql`, rendered per scale factor into `<dataset>/sf<N>/queries/`, never generated.
-- Optionally an Iceberg v3 copy, partitioned by day and compacted to 512 MB files.
+- Distributed runs write Iceberg v3 tables in S3 Tables instead, partitioned by day and compacted to 512 MB files (see "Coordinator and workers").
 
 ### Chunks and resuming
 
 - A chunk is a slice of one partition, e.g. a share of one day's sessions.
-- Chunk size is set by the 2 GB limit: measure a chunk's peak memory (`duckdb_memory()` or the process's peak RSS) at the largest SF and cut chunks to stay under it with room to spare.
-  The reference's old 5,000-session chunks peaked at about 2.2 GB, which is over the limit, so they must shrink.
+- Chunk size is set by the 2 GB limit: measure peak RSS per process at the largest SF, on the busiest partition, with 1 thread and the limit set.
+- Measure the curve at several chunk sizes; never scale from one point.
+  Peak memory is a fixed cost per process plus a cost per row, so halving a chunk barely halves its memory.
+  In the reference generator the fixed cost is about 1.1 GB (generator setup, extensions, allocator), plus about 0.25 GB per 1,000 sessions.
+- The reference generator's chunks are 2,500 sessions of one day: about 45,000 spans and 1.9 GB peak at SF100.
 - A plan step fixes the list of chunks, so a restart resumes against the same list.
 - Progress is recorded in a manifest or ledger, so a restart skips completed chunks.
 - Without containers, `--shard K/N` generates every N-th chunk from chunk K, and `--merge-shards N` combines the manifests.
@@ -106,8 +109,13 @@ The reference implementation is `agenttelemetry` in the `sql-arena-data` repo; r
 
 - The coordinator hands out one chunk per request, with a 30-minute lease; an expired lease puts the chunk back.
 - A failed chunk is retried up to 3 times.
-- A worker runs one process per core by default, each one DuckDB with one thread and a 2 GB memory limit, and stages its output files.
-- The coordinator commits staged files per table, in batches of up to 2 million rows, one commit at a time per table, and keeps a JSONL ledger so a restart resumes.
+- A worker runs one process per core by default, each one DuckDB with one thread and a 2 GB memory limit.
+- A worker writes Parquet straight into each table's S3 Tables storage, with Iceberg field ids and one file per day partition.
+- The coordinator never reads or rewrites data.
+  It commits the workers' files as an Iceberg v3 append: it writes the manifest and manifest list itself, including the mandatory v3 row lineage (`first-row-id`, `added-rows`), and commits through the REST catalog.
+  Commit cost then doesn't depend on data size.
+  The reference is `agenttelemetry/iceberg_append.py`.
+- One commit at a time per table, and a JSONL ledger so a restart resumes.
 - The coordinator has no authentication, so workers reach it over a private network only.
 
 ### Command line
