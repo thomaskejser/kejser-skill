@@ -1,6 +1,6 @@
 ---
 name: css
-description: CSS conventions — semantic styling only, no Tailwind or any utility-class framework, a fixed set of global stylesheets (tokens, reset, text, table, form, navigation, layout, feedback) in cascade layers, role-named design tokens with light-dark() theming, single-column page content (no side panels unless Thomas asks), fluid responsive layout where the page never scrolls sideways. Use whenever writing or editing CSS, styling components or pages, choosing class names, adding tokens, or setting up the styles of a new app.
+description: CSS conventions — semantic styling only, no Tailwind or any utility-class framework, a fixed set of global stylesheets (tokens, reset, text, table, form, navigation, layout, feedback) in cascade layers, role-named design tokens with light-dark() theming in both a light and a dark theme plus a debug-only theme switch, single-column page content (no side panels unless Thomas asks), fluid responsive layout with rem font sizes, three em width bands and a page that never scrolls sideways. Use whenever writing or editing CSS, styling components or pages, choosing class names, adding tokens, or setting up the styles of a new app.
 ---
 
 # CSS conventions
@@ -98,12 +98,16 @@ Pick selectors in this order of preference:
 - Scales use t-shirt steps: `--size-sm` … `--size-3xl`, `--space-3xs` … `--space-3xl`, `--radius-sm/md/lg/round`, `--duration-fast/base/slow`.
 - Layout sizes are tokens too: `--page-width`, `--page-gutter`, `--tap-target`, `--layer-sticky`.
 - Media queries can't read custom properties, so breakpoints are the one literal allowed outside tokens.
-  Keep them to a small set, and check the existing ones before adding a new one.
+  They are the fixed set in "Responsive" below.
 
 ### Theming and derived colours
 
 - `:root` sets `color-scheme: light dark`, and colour tokens use `light-dark(<light>, <dark>)`.
 - `:root[data-theme="light"]` and `:root[data-theme="dark"]` force a theme by setting `color-scheme`.
+- Every app ships both themes, and every colour token has a real value in each; a `light-dark()` with the same colour twice needs a reason.
+- A `ThemeSwitch` component in the app header toggles `data-theme` between `light` and `dark`.
+  It renders only inside `{#if dev}`, with `dev` from `$app/environment`, so production builds never contain it.
+  Without it, the page follows `prefers-color-scheme`.
 - Other modes (e.g. `data-density="compact"`) redefine tokens; they never rewrite rules.
 - Derive instead of enumerating: hovers, tints and borders come from `color-mix(in oklab, …)` over an existing token.
 - A variant sets one custom property (`--tone`, `--fill`) that the base rule consumes; it never repeats a block.
@@ -127,6 +131,21 @@ Pick selectors in this order of preference:
 Every surface works from 320px wide to widescreen.
 
 - Go fluid first and add breakpoints last: `clamp()`, `min()` and percentages before any media query.
+- Font sizes are in `rem`, never `px`.
+  Headings scale fluidly with `clamp(<min rem>, <rem> + <vw>, <max rem>)`, always with a `rem` term so browser zoom still works.
+- Never set a pixel font size on `html` or `:root`; the user's browser setting is the base.
+- Space, radii, `--page-width` and `--tap-target` are in `rem` too.
+  Only hairlines (borders, outlines) are in `px`.
+- Breakpoints are exactly the three width bands from `kejser-code:ux-design`, written in `em`:
+
+  | Query                    | Band   | Changes                                                        |
+  | ------------------------ | ------ | -------------------------------------------------------------- |
+  | none (base rules)        | Narrow | One column; navigation is a menu button; tables scroll inside. |
+  | `@media (width >= 40em)` | Medium | Navigation shows in full; auto-fit grids get more columns.     |
+  | `@media (width >= 64em)` | Wide   | Content stops at `--page-width`; extra width becomes margin.   |
+
+  Write mobile first: base rules are the narrow band and the queries only add.
+  Use the range syntax shown, and don't add a fourth band without asking Thomas.
 - **The page never scrolls horizontally.**
   Wide content (tables, code, diagrams) scrolls inside its own container.
 - Write grid tracks as `minmax(0, 1fr)`, never a bare `1fr`.
@@ -159,6 +178,7 @@ Every surface works from 320px wide to widescreen.
 3. No raw values outside `tokens.css`, apart from breakpoints; no palette tokens outside it.
 4. Each rule sits in the sheet and layer that own its concern.
 5. Logical properties only.
-6. No horizontal page scroll at 320px, in either theme.
-7. Focus visible, contrast adequate, motion preference respected.
-8. No comments in the stylesheets.
+6. Font sizes in `rem`, breakpoints only `40em` and `64em`; no horizontal page scroll at 320px, in either theme.
+7. Both themes complete; the theme switch renders only in dev.
+8. Focus visible, contrast adequate, motion preference respected.
+9. No comments in the stylesheets.

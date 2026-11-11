@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres with pixel-perfect alignment and no wavy margins, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, and one colour palette with RGB codes defined in a single central place. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
+description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres with pixel-perfect alignment and no wavy margins, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, one colour palette with RGB codes defined in a single central place, every design in both a light and a dark theme with a theme switch visible only in debug mode, and responsive layouts with relative font sizes and fixed rules for each width band. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
 ---
 
 # UX design
@@ -94,3 +94,31 @@ Each principle lists how it played out in Thomas's corrections to a desktop map 
 - List every colour with its RGB code in one central file, and have all code refer to the colours from there.
 - Never write a colour literal anywhere else; a colour that's missing is added to the palette first.
 - On the web, that file is `tokens.css`, as `kejser-web:css` describes.
+
+### 11. Every design has a light and a dark theme
+
+- Design both themes from the start; neither is an afterthought.
+- Both come from the one palette in principle 10: each role colour has a light and a dark value.
+- Users get the theme their operating system asks for.
+- Add a button that switches between the two, visible only in debug mode, so every screen can be checked in both themes.
+  Release builds never show it.
+  - Web: render it only when `dev` from `$app/environment` is true.
+  - Desktop: compile it only into debug builds (`#ifdef _DEBUG`, `cfg(debug_assertions)`).
+- Check every change in both themes before showing it.
+
+### 12. Responsive, with relative sizes
+
+- Every design scales from a phone (320px wide) to a widescreen monitor.
+- Font sizes are relative to the user's base size, never fixed pixels, so the user's own text-size setting scales the whole UI.
+  Spacing that sits around text follows the same base.
+- Layout changes at a small, fixed set of width bands, and each band has a stated rule:
+
+  | Band   | Width          | Rule                                                                                      |
+  | ------ | -------------- | ----------------------------------------------------------------------------------------- |
+  | Narrow | below 40em     | One column. Navigation collapses into a menu button. Wide tables scroll inside their box. |
+  | Medium | 40em to 64em   | Navigation shows in full. Card grids fit as many columns as are legible.                  |
+  | Wide   | 64em and above | Content grows to the page width token and no further; extra width becomes margin.         |
+
+- Between bands, sizes change fluidly; nothing jumps except at a band edge.
+- The widths are in `em`, so the bands move with the user's text size.
+- On the web, `kejser-web:css` gives the exact CSS for this.
