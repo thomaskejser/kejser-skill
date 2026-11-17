@@ -70,5 +70,6 @@ Cover each statement's success, every clause and modifier, absence, conflict, an
 ## SQL in applications
 
 SQL text lives in standalone `.sql` files, loaded or imported by the application — not built from strings inlined in host-language code. To change a query, edit its `.sql` file.
+DDL goes in `schema/` and queries in `sql/` (see `kejser-code:database`).
 
 DuckDB is the default engine for local analytics, staging and reporting.

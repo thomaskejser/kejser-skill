@@ -70,6 +70,16 @@ CREATE TABLE customer (
 CREATE UNIQUE INDEX customer_vat_number ON customer (vat_number);
 ```
 
+### Where SQL files live
+
+Thomas: "I want schema files to live in a schema/ directory, the sql/ directory is for queries".
+
+- `schema/` holds the DDL that defines the data model: `CREATE TABLE`, `CREATE SCHEMA` or namespace, views, indexes.
+  One file per object, named after it: `schema/customer.sql`, `schema/namespace.sql`.
+- `sql/` holds only queries and statements that read or change data or the session: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `ATTACH`, `SET`.
+- Each component that owns SQL has both folders side by side, e.g. `common/schema/` and `common/sql/`.
+- Benchmark or workload query sets may use `queries/` in place of `sql/`; the DDL still goes in `schema/`.
+
 ### Query access from apps
 
 Apps always execute **raw SQL read from `.sql` files** — no ORM, no query builder, no SQL assembled from strings in host-language code. To change a query, edit its `.sql` file.

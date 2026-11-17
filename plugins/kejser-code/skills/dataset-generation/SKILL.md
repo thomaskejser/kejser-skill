@@ -75,7 +75,7 @@ The reference implementation is `agenttelemetry` in the `sql-arena-data` repo; r
 
 ### Engine
 
-- The generator is SQL in `<dataset>/sql/*.sql`, run by DuckDB from thin Python (see `kejser-code:etl` and `kejser-code:language-choice`).
+- The generator is SQL: table DDL in `<dataset>/schema/`, generating statements in `<dataset>/sql/*.sql`, run by DuckDB from thin Python (see `kejser-code:etl` and `kejser-code:language-choice`).
 - One entry point: `uv run generate.py <dataset> --sf N`.
 - A web app, such as the coordinator's, is SvelteKit on Node.js with DuckDB through `duckdb-access`.
 
