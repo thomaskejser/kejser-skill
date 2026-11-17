@@ -50,6 +50,7 @@ How a database engine names the views and columns it exposes about itself.
 ### Timestamps
 
 - All timestamps are `timestamptz`.
+- Every timestamp column ends in `_time` (see `kejser-code:database`).
 - `created_time` is when the object was created.
 - `altered_time` is when it was last altered, and `NULL` if it never was.
 - Every view has both by default.
