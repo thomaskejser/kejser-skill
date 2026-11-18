@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres with pixel-perfect alignment and no wavy margins, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, one colour palette with RGB codes defined in a single central place, every design in both a light and a dark theme with a theme switch visible only in debug mode, and responsive layouts with relative font sizes and fixed rules for each width band. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, and when Thomas gives feedback on a UI.
+description: Thomas's UX design principles for any user interface (web, Win32, other desktop) — show each fact once, let the visual (icon, colour, position) carry information instead of annotations, reveal detail at the next zoom level, the same action works on every representation of an item, one filter or selection drives every view, anchor elements cleanly to edges and centres with pixel-perfect alignment and no wavy margins, treat space as scarce, high-contrast text with black outlines over variable backgrounds, never hide content behind overlays or highlights, one colour palette with RGB codes defined in a single central place, every design in both a light and a dark theme with a theme switch visible only in debug mode, responsive layouts with relative font sizes and fixed rules for each width band, and reports annotated with at most one sentence per panel. Use whenever designing or changing screens, views, tabs, maps, tables, legends, overlays, highlights, icons or colours, reports, dashboards, panels or charts, and when Thomas gives feedback on a UI.
 ---
 
 # UX design
@@ -122,3 +122,9 @@ Each principle lists how it played out in Thomas's corrections to a desktop map 
 - Between bands, sizes change fluidly; nothing jumps except at a band edge.
 - The widths are in `em`, so the bands move with the user's text size.
 - On the web, `kejser-web:css` gives the exact CSS for this.
+
+### 13. Annotate reports as little as possible
+
+- Each report, panel or chart gets at most one sentence saying what the data contains.
+- If the data isn't clear, that is a UX and rendering problem: fix the chart, layout, labels or interaction instead of explaining it.
+- No paragraphs on how to read a chart, what "higher is better" means or how the data was measured, and no hover hints.
