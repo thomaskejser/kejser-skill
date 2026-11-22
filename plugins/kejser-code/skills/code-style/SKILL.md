@@ -1,6 +1,6 @@
 ---
 name: code-style
-description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, minimal local changes, how to test and verify, and revisiting changed code against the rules after every feature or rework. Use whenever writing, editing, or reviewing code in any language, writing code comments, deciding where design rationale goes, or finishing a feature or rework.
+description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, aggressively removing dead code (including database objects a rename left behind), minimal local changes, how to test and verify, and revisiting changed code against the rules after every feature or rework. Use whenever writing, editing, or reviewing code in any language, writing code comments, deciding where design rationale goes, or finishing a feature or rework.
 ---
 
 # Code style
@@ -44,6 +44,18 @@ They never tell the story of how it got here.
 - **Keep changes minimal and local.** No generic abstraction until the operation is genuinely needed in several places.
 - **DRY.** Reuse existing helpers, clients and dispatchers before writing new ones. Never create two code paths for the same thing.
 - When editing someone else's code, match its idioms, even where you would do it differently.
+
+## Remove dead code
+
+Aggressively remove code that is no longer used.
+
+- Delete dead functions, constants, macros, types and views in the same change that orphans them.
+- Never leave them in place and report them as "harmless".
+- After a rename or refactor, grep for the old name and remove every leftover.
+- Check databases too: functions, macros and views the rename left behind (e.g. DuckDB's `duckdb_functions()` and `duckdb_views()`) are dropped.
+  When the macro `wr_cross` became `void_cross`, the old macro left in the database had to be dropped as well.
+- This covers code and code-like objects, never recorded data.
+  A repo rule such as "merge, never drop" on data tables still stands.
 
 ## Errors
 
