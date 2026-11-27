@@ -1,6 +1,6 @@
 ---
 name: code-style
-description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, aggressively removing dead code (including database objects a rename left behind), minimal local changes, how to test and verify, and revisiting changed code against the rules after every feature or rework. Use whenever writing, editing, or reviewing code in any language, writing code comments, deciding where design rationale goes, or finishing a feature or rework.
+description: Thomas's language-agnostic code conventions — minimal comments (contract only, rationale in docs), comments and docs describe the code as it is now (never its history), guard clauses, fail loudly, no silently-ignored input, DRY, aggressively removing dead code (including database objects a rename left behind), minimal local changes, a root TODO.md of parked work, how to test and verify, and revisiting changed code against the rules after every feature or rework. Use whenever writing, editing, or reviewing code in any language, writing code comments, deciding where design rationale goes, parking work for later in TODO.md, or finishing a feature or rework.
 ---
 
 # Code style
@@ -88,4 +88,9 @@ After finishing a new feature or reworking one, go back over every file the work
 
 - Rationale and design live in `docs/` (or `doc/`) as one file per topic, not in source.
 - When you hit a constraint, write it down where the next author will read it (e.g. `docs/LIMITATIONS.md`) rather than leaving it to be rediscovered.
+- Every project has a `TODO.md` at its root, listing work Thomas has parked for later.
+  - Add an item when Thomas parks something, or when work is deliberately left out of the current change.
+  - One bullet per item, saying what is left to do and, if it isn't obvious, why it waits.
+  - Delete an item when it is done; never tick it off or mark it done.
+  - It holds only parked work, never ideas nobody asked for or a log of what was done.
 - Keep command examples generic — no personal usernames, local credential paths, or secrets.
